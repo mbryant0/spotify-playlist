@@ -1,5 +1,7 @@
 package com.mbryant.spotifyplaylistgenerator.models;
 
+import com.wrapper.spotify.requests.data.playlists.CreatePlaylistRequest;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,9 @@ public class Playlist
     @Column
     private int highyear;
 
+    @Column
+    private String userid;
+
     @OneToMany(mappedBy = "playlist", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Track> tracks = new ArrayList<>();
 
@@ -43,7 +48,7 @@ public class Playlist
     {
     }
 
-    public Playlist(String playlistname, boolean playlistprivacy, String description, int numtracks, int lowtempo, int hightempo, int lowyear, int highyear)
+    public Playlist(String playlistname, boolean playlistprivacy, String description, int numtracks, int lowtempo, int hightempo, int lowyear, int highyear, String userid)
     {
         this.playlistname = playlistname;
         this.playlistprivacy = playlistprivacy;
@@ -53,6 +58,7 @@ public class Playlist
         this.hightempo = hightempo;
         this.lowyear = lowyear;
         this.highyear = highyear;
+        this.userid = userid;
     }
 
     public long getPlaylistid()
@@ -154,4 +160,15 @@ public class Playlist
     {
         this.tracks = tracks;
     }
+
+    public String getUserid()
+    {
+        return userid;
+    }
+
+    public void setUserid(String userid)
+    {
+        this.userid = userid;
+    }
+
 }

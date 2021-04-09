@@ -22,7 +22,7 @@ public class ClientAuthorization
     private static final String clientSecret = "ef62c88a0e31415db8b62b6060ed6b3e";
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://127.0.0.1:8080/");
     private static final String code = "";
-    private static final String refreshToken = "initial";
+    private static final String refreshToken = "";
 
     private static final SpotifyApi spotifyApi = new SpotifyApi.Builder()
             .setClientId(clientId)
@@ -39,18 +39,16 @@ public class ClientAuthorization
 
 
     private static final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-//          .state("x4xkmn9pu3j6ukrs8n")
-//          .scope("user-read-birthdate,user-read-email")
-//          .show_dialog(true)
+            .scope("user-read-birthdate,user-read-email")
             .build();
 
-    public static void authorizationCodeUri_Sync() {
+    public static void authorizationCodeUriSync() {
         final URI uri = authorizationCodeUriRequest.execute();
 
         System.out.println("URI: " + uri.toString());
     }
 
-    public static void authorizationCodeUri_Async()
+    public static void authorizationCodeUriAsync()
     {
         try
         {
@@ -68,7 +66,7 @@ public class ClientAuthorization
         }
     }
 
-        public static void authorizationCode_Sync() {
+        public static void authorizationCodeSync() {
             try {
                 final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
 
@@ -81,7 +79,7 @@ public class ClientAuthorization
             }
         }
 
-        public static void authorizationCode_Async(){
+        public static void authorizationCodeAsync(){
             try {
                 final CompletableFuture<AuthorizationCodeCredentials> authorizationCodeCredentialsFuture = authorizationCodeRequest.executeAsync();
                 final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeCredentialsFuture.join();
@@ -97,7 +95,7 @@ public class ClientAuthorization
             }
         }
 
-    public static void authorizationCodeRefresh_Sync() {
+    public static void authorizationCodeRefreshSync() {
         try {
             final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRefreshRequest.execute();
             spotifyApi.setAccessToken(authorizationCodeCredentials.getAccessToken());
@@ -108,7 +106,7 @@ public class ClientAuthorization
         }
     }
 
-    public static void authorizationCodeRefresh_Async() {
+    public static void authorizationCodeRefreshAsync() {
         try {
             final CompletableFuture<AuthorizationCodeCredentials> authorizationCodeCredentialsFuture = authorizationCodeRefreshRequest.executeAsync();
             final AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeCredentialsFuture.join();
