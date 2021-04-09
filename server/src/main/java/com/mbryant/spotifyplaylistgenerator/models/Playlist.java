@@ -43,6 +43,28 @@ public class Playlist
     {
     }
 
+    public Playlist(String playlistname, boolean playlistprivacy, String description, int numtracks, int lowtempo, int hightempo, int lowyear, int highyear)
+    {
+        this.playlistname = playlistname;
+        this.playlistprivacy = playlistprivacy;
+        this.description = description;
+        this.numtracks = numtracks;
+        this.lowtempo = lowtempo;
+        this.hightempo = hightempo;
+        this.lowyear = lowyear;
+        this.highyear = highyear;
+    }
+
+    public long getPlaylistid()
+    {
+        return playlistid;
+    }
+
+    public void setPlaylistid(long playlistid)
+    {
+        this.playlistid = playlistid;
+    }
+
     public String getPlaylistname()
     {
         return playlistname;

@@ -31,6 +31,14 @@ public class Track
     {
     }
 
+    public Track(String trackname, String artistname, int tempo, int numyear)
+    {
+        this.trackname = trackname;
+        this.artistname = artistname;
+        this.tempo = tempo;
+        this.numyear = numyear;
+    }
+
     public String getTrackname()
     {
         return trackname;
