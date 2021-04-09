@@ -21,4 +21,63 @@ public class Track
 
     @Column
     private int numyear;
+
+    @ManyToOne
+    @JoinColumn(name = "playlistid", nullable = false)
+    private Playlist playlist;
+
+
+    public Track()
+    {
+    }
+
+    public String getTrackname()
+    {
+        return trackname;
+    }
+
+    public void setTrackname(String trackname)
+    {
+        this.trackname = trackname;
+    }
+
+    public String getArtistname()
+    {
+        return artistname;
+    }
+
+    public void setArtistname(String artistname)
+    {
+        this.artistname = artistname;
+    }
+
+    public int getTempo()
+    {
+        return tempo;
+    }
+
+    public void setTempo(int tempo)
+    {
+        this.tempo = tempo;
+    }
+
+    public int getNumyear()
+    {
+        return numyear;
+    }
+
+    public void setNumyear(int numyear)
+    {
+        this.numyear = numyear;
+    }
+
+    public Playlist getPlaylist()
+    {
+        return playlist;
+    }
+
+    public void setPlaylist(Playlist playlist)
+    {
+        this.playlist = playlist;
+    }
 }

@@ -43,5 +43,93 @@ public class Playlist
     {
     }
 
+    public String getPlaylistname()
+    {
+        return playlistname;
+    }
 
+    public void setPlaylistname(String playlistname)
+    {
+        this.playlistname = playlistname;
+    }
+
+    public boolean isPlaylistprivacy()
+    {
+        return playlistprivacy;
+    }
+
+    public void setPlaylistprivacy(boolean playlistprivacy)
+    {
+        this.playlistprivacy = playlistprivacy;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public int getNumtracks()
+    {
+        return numtracks;
+    }
+
+    public void setNumtracks(int numtracks)
+    {
+        this.numtracks = numtracks;
+    }
+
+    public int getLowtempo()
+    {
+        return lowtempo;
+    }
+
+    public void setLowtempo(int lowtempo)
+    {
+        this.lowtempo = lowtempo;
+    }
+
+    public int getHightempo()
+    {
+        return hightempo;
+    }
+
+    public void setHightempo(int hightempo)
+    {
+        this.hightempo = hightempo;
+    }
+
+    public int getLowyear()
+    {
+        return lowyear;
+    }
+
+    public void setLowyear(int lowyear)
+    {
+        this.lowyear = lowyear;
+    }
+
+    public int getHighyear()
+    {
+        return highyear;
+    }
+
+    public void setHighyear(int highyear)
+    {
+        this.highyear = highyear;
+    }
+
+    public List<Track> getTracks()
+    {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks)
+    {
+        this.tracks = tracks;
+    }
 }
