@@ -1,6 +1,5 @@
 import './App.css';
 import axios from 'axios';
-import React from 'react';
 
 function App() {
   // dummy data to test POST request
@@ -16,20 +15,23 @@ function App() {
     userid: 'TBT',
   };
 
-  const clientId = 'b11d8ab198794afa9a89737020c39376';
-  const secret = 'ef62c88a0e31415db8b62b6060ed6b3e';
-  const redirectUri = 'http%3A//localhost%3A3000/';
+  const handleClick = () => {
+    axios
+      .post('http://localhost:2019/playlists/playlist', playlist)
+      .then((res) => console.log('Success!', res))
+      .catch((err) => console.log('Error occurred', err));
+  };
+
   const handleData = () => {
     axios
-      .get(`https://accounts.spotify.com/authorize`)
-      .then((res) => {
-        console.log('Your authorization code: ', res);
-      })
+      .get('http://localhost:2019/playlists/playlist')
+      .then((res) => console.log('Playlists: ', res))
       .catch((err) => console.log('There is an error', err));
   };
   return (
     <>
       <h1>Testing out authorization</h1>
+      <button onClick={handleClick}>Click to authorize</button>
       <button onClick={handleData}>Click to check data</button>
     </>
   );
