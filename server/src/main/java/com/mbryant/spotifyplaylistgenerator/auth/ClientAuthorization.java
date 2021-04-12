@@ -19,7 +19,7 @@ import java.util.concurrent.CompletionException;
 public class ClientAuthorization
 {
     private static final String clientId = "b11d8ab198794afa9a89737020c39376";
-    private static final String clientSecret = "ef62c88a0e31415db8b62b6060ed6b3e";
+    private static final String clientSecret = "138d489f94b94660bc57c8c212ce2f29";
     private static final URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:3000/");
     private static final String code = "";
     private static final String refreshToken = "";
