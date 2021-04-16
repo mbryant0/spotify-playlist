@@ -7,10 +7,12 @@ import com.wrapper.spotify.model_objects.specification.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class AuthCredentialController
 {
@@ -30,8 +32,12 @@ public class AuthCredentialController
     public ResponseEntity<AuthCredential> getAuthFromSpotify(@RequestParam("code") String code) {
         AuthCredential creds = spotifyService.exchangeForTokens(code);
         if (creds == null) return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
         return new ResponseEntity<>(creds, HttpStatus.OK);
+    }
+
+    @GetMapping(Constants.TOKEN)
+    public String getToken(){
+        return spotifyService.getToken();
     }
 
     @GetMapping(Constants.ME)

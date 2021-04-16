@@ -18,7 +18,7 @@ public class SpotifyService
 {
     //    Create the redirect URI for spotify API
     private final URI redirectUri = SpotifyHttpManager
-            .makeUri( "http://localhost:3000" + Constants.REDIRECT);
+            .makeUri( "http://localhost:2019" + Constants.REDIRECT);
 
     //    Create the spotifyAPI wrapper instance for future use
     private final SpotifyApi spotifyApi = new SpotifyApi.Builder()
@@ -39,6 +39,11 @@ public class SpotifyService
     public String authorizationCodeUri_Sync() {
         final URI uri = authorizationCodeUriRequest.execute();
         return uri.toString();
+    }
+
+    public String getToken(){
+        String token = spotifyApi.getAccessToken();
+        return token;
     }
 
     /**
