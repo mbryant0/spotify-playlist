@@ -29,7 +29,7 @@ public class SpotifyService
 
     //    Create authorization request to get user consent with scopes
     private final AuthorizationCodeUriRequest authorizationCodeUriRequest = spotifyApi.authorizationCodeUri()
-            .scope("playlist-modify-private user-read-email")
+            .scope("playlist-modify-private playlist-modify-public user-read-private user-read-email")
             .build();
 
     /**

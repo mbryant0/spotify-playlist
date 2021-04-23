@@ -1,6 +1,7 @@
 import './App.css';
 import axios from 'axios';
 import React, { useState } from 'react';
+import SearchSongs from './components/SearchSongs/SearchSongs';
 
 function App() {
   const [uri, setUri] = useState('');
@@ -8,8 +9,8 @@ function App() {
   const [userId, setUserId] = useState('');
   // dummy data to test POST request
   const playlistCreation = {
-    name: 'Test title',
-    description: 'Test description',
+    name: 'New Playlist',
+    description: 'a test playlist',
     public: 'false',
   };
 
@@ -59,17 +60,12 @@ function App() {
       .post(
         `https://api.spotify.com/v1/users/${userId}/playlists`,
         playlistCreation,
-        { headers: { Authorization: 'Bearer' + token } }
+        { headers: { Authorization: 'Bearer' + ' ' + token } }
       )
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
-  const handleData = () => {
-    axios
-      .get('http://localhost:2019/playlists/playlist')
-      .then((res) => console.log('Playlists: ', res))
-      .catch((err) => console.log('There is an error', err));
-  };
+
   return (
     <>
       <h1>Testing out authorization + Creating New Playlist</h1>
@@ -80,6 +76,7 @@ function App() {
       <button onClick={handlePlaylistCreation}>
         Click to create a New Playlist!
       </button>
+      <SearchSongs token={token} />
     </>
   );
 }
