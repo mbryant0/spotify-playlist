@@ -43,9 +43,9 @@ const SearchSongs = (props) => {
   ];
   const [query, setQuery] = useState('');
   const [params, setParams] = useState({
-    year: '1996',
+    year: '2001',
     genre: 'idm',
-    numSongs: '50',
+    numSongs: '15',
   });
   const randomizeQuery = () => {
     var result = '';

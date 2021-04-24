@@ -1,5 +1,6 @@
 import './App.css';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import SearchSongs from './components/SearchSongs/SearchSongs';
 import PlaylistForm from './components/PlaylistForm/PlaylistForm';
@@ -11,17 +12,9 @@ function App() {
   const [playlistId, setPlaylistId] = useState('');
   // dummy data to test POST request
   const playlistCreation = {
-    name: '1996 IDM',
-    description: 'IDM Music',
+    name: '2001 IDM',
+    description: 'Let us test out different genres',
     public: 'false',
-  };
-
-  const playlistParamaters = {
-    numtracks: 20,
-    lowtempo: 90,
-    hightempo: 150,
-    lowyear: 2010,
-    highyear: 2020,
   };
 
   // prints out URI for user to follow link to
