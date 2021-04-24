@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
+import AddSongs from '../AddSongs/AddSongs';
 
 const SearchSongs = (props) => {
   const randomCharacters = [
@@ -42,9 +43,9 @@ const SearchSongs = (props) => {
   ];
   const [query, setQuery] = useState('');
   const [params, setParams] = useState({
-    year: '1988',
-    genre: 'rap',
-    numSongs: '5',
+    year: '1996',
+    genre: 'idm',
+    numSongs: '50',
   });
   const randomizeQuery = () => {
     var result = '';
@@ -55,6 +56,7 @@ const SearchSongs = (props) => {
   };
 
   const [searchResults, setSearchResults] = useState([]);
+  const [uris, setUris] = useState([]);
   const handleSearch = () => {
     axios
       .get(
@@ -68,10 +70,25 @@ const SearchSongs = (props) => {
       .catch((err) => console.log('Error: ', err));
   };
 
+  /*const handleUris = () => {
+    searchResults.map((song) => {
+      console.log(searchResults);
+      setUris([...uris, song.uri]);
+      console.log(uris);
+    });
+  };*/
+
+  const handleUris = () => {
+    let uriList = [...new Set(searchResults.map((song) => song.uri))];
+    setUris(uriList);
+  };
+  console.log(uris);
   return (
     <>
       <button onClick={randomizeQuery}>Get query seed</button>
       <button onClick={handleSearch}>Search for songs</button>
+      <button onClick={handleUris}>Get URIs</button>
+      <AddSongs playlistId={props.playlistId} uris={uris} token={props.token} />
     </>
   );
 };

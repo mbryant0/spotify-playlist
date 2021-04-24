@@ -2,15 +2,17 @@ import './App.css';
 import axios from 'axios';
 import React, { useState } from 'react';
 import SearchSongs from './components/SearchSongs/SearchSongs';
+import PlaylistForm from './components/PlaylistForm/PlaylistForm';
 
 function App() {
   const [uri, setUri] = useState('');
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
+  const [playlistId, setPlaylistId] = useState('');
   // dummy data to test POST request
   const playlistCreation = {
-    name: 'New Playlist',
-    description: 'a test playlist',
+    name: '1996 IDM',
+    description: 'IDM Music',
     public: 'false',
   };
 
@@ -62,13 +64,17 @@ function App() {
         playlistCreation,
         { headers: { Authorization: 'Bearer' + ' ' + token } }
       )
-      .then((res) => console.log(res))
+      .then((res) => {
+        setPlaylistId(res.data.id);
+        console.log(res.data.id);
+      })
       .catch((err) => console.log(err));
   };
 
   return (
     <>
-      <h1>Testing out authorization + Creating New Playlist</h1>
+      <h1>Spotify Playlist Generator</h1>
+      <PlaylistForm />
       <button onClick={handleURI}>Click to begin authorization</button>
       <button onClick={handleRedirect}>Click to save token</button>
       <button onClick={handleToken}>Click to put token in state</button>
@@ -76,7 +82,7 @@ function App() {
       <button onClick={handlePlaylistCreation}>
         Click to create a New Playlist!
       </button>
-      <SearchSongs token={token} />
+      <SearchSongs playlistId={playlistId} token={token} />
     </>
   );
 }
