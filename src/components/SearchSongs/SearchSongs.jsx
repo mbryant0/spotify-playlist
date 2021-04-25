@@ -70,19 +70,11 @@ const SearchSongs = (props) => {
       .catch((err) => console.log('Error: ', err));
   };
 
-  /*const handleUris = () => {
-    searchResults.map((song) => {
-      console.log(searchResults);
-      setUris([...uris, song.uri]);
-      console.log(uris);
-    });
-  };*/
-
   const handleUris = () => {
     let uriList = [...new Set(searchResults.map((song) => song.uri))];
     setUris(uriList);
   };
-  console.log(uris);
+
   return (
     <>
       <button onClick={randomizeQuery}>Get query seed</button>

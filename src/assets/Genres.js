@@ -1,43 +1,46 @@
 export const genres = [
   {
     text: 'Select a genre...',
-    value: 'Select a genre...',
+    value: '',
     attributes: { disabled: true, selected: true },
   },
-  { text: 'POP', value: 'POP', attributes: { disabled: true } },
-  { text: 'Pop', value: 'Pop' },
+  { text: '<POP>', value: 'POP', attributes: { disabled: true } },
   { text: 'Britpop', value: 'Britpop' },
+  { text: 'Hyperpop', value: 'hyperpop' },
   { text: 'Indie Pop', value: 'indie+pop' },
-  { text: 'Synth Pop', value: 'synth+pop' },
-  { text: 'K-Pop', value: 'kpop' },
   { text: 'J-Pop', value: 'jpop' },
-  { text: 'HIP-HOP', value: 'HIP-HOP', attributes: { disabled: true } },
+  { text: 'K-Pop', value: 'kpop' },
+  { text: 'Pop', value: 'Pop' },
+  { text: 'Synth Pop', value: 'synth+pop' },
+  { text: '<HIP-HOP>', value: 'HIP-HOP', attributes: { disabled: true } },
   { text: 'Hip Hop', value: 'hip+hop' },
-  { text: 'rap', value: 'rap' },
+  { text: 'Rap', value: 'rap' },
+  { text: 'Underground Hip Hop', value: 'underground+hip+hop' },
+  { text: 'Instrumental Hip Hop', value: 'instrumental+hip+hop' },
+  { text: 'Trap', value: 'trap' },
+  { text: 'Hardcore Hip Hop', value: 'hardcore+hip+hop' },
+  { text: 'Grime', value: 'grime' },
+  { text: '<R&B>', value: 'R&B', attributes: { disabled: true } },
+  { text: 'R&B', value: 'R&B' },
+  { text: 'Soul', value: 'Soul' },
+  { text: 'Funk', value: 'funk' },
+  { text: '<ELECTRONIC>', value: 'ELECTRONIC', attributes: { disabled: true } },
+  { text: 'Electronic', value: 'Electronic' },
+  { text: 'House', value: 'House' },
+  { text: 'Downtempo', value: 'Downtempo' },
+  { text: 'Techno', value: 'Techno' },
+  { text: 'Dubstep', value: 'Dubstep' },
+  { text: 'EDM', value: 'EDM' },
+  { text: 'IDM', value: 'IDM' },
+  { text: 'Chiptune', value: 'Chiptune' },
+  { text: 'Chillwave', value: 'Chillwave' },
+  { text: 'Vaporwave', value: 'vaporwave' },
 ];
 
 export default { genres };
 /*
-                  <option>Underground Hip Hop</option>
-                  <option>Instrumental Hip Hop</option>
-                  <option>Trap</option>
-                  <option>Hardcore Hip Hop</option>
-                  <option>Grime</option>
-                  <option>R{'&'}B</option>
-                  <option>Soul</option>
-                  <option>Funk</option>
-                  <option>Electronic</option>
-                  <option>House</option>
-                  <option>Downtempo</option>
-                  <option>Techno</option>
-                  <option>Dubstep</option>
-                  <option>EDM</option>
-                  <option>IDM</option>
-                  <option>Chiptune</option>
-                  <option>Chillwave</option>
-                  <option>Hyperpop</option>
-                  <option>Juke</option>
-                  <option>Vaporwave</option>
+
+ADD THESE GENRES LATER ONCE YOU GET IT WORKING
                   <option>Synthwave</option>
                   <option>Experimental</option>
                   <option>Ambient</option>
