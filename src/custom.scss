@@ -32,4 +32,14 @@ button.btn-primary:hover {
   border-color: #52af77;
 }
 
+.custom-control-input:checked ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #52af77 !important;
+  background-color: #52af77 !important;
+}
+.custom-control-input:focus ~ .custom-control-label::before {
+  color: #fff;
+  border-color: #52af77 !important;
+  box-shadow: 0 0 0 0.2rem rgba(82, 175, 119, 0.6) !important;
+}
 @import '~bootstrap/scss/bootstrap';
