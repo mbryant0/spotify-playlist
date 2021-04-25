@@ -1,6 +1,5 @@
-import './App.css';
+import './App.scss';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import SearchSongs from './components/SearchSongs/SearchSongs';
 import PlaylistForm from './components/PlaylistForm/PlaylistForm';
@@ -66,7 +65,6 @@ function App() {
 
   return (
     <>
-      <h1>Spotify Playlist Generator</h1>
       <PlaylistForm />
       <button onClick={handleURI}>Click to begin authorization</button>
       <button onClick={handleRedirect}>Click to save token</button>

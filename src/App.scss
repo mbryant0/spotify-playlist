@@ -1,0 +1,77 @@
+@import '~bootstrap/scss/bootstrap';
+@import './custom.scss';
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+@mixin animate($name, $duration, $iteration, $direction) {
+  -webkit-animation-duration: $duration;
+  -moz-animation-duration: $duration;
+  -o-animation-duration: $duration;
+  animation-duration: $duration;
+  -webkit-animation-iteration-count: $iteration;
+  -moz-animation-iteration-count: $iteration;
+  -o-animation-iteration-count: $iteration;
+  animation-iteration-count: $iteration;
+  -webkit-animation-name: $name;
+  -moz-animation-name: $name;
+  -o-animation-name: $name;
+  animation-name: $name;
+  -webkit-animation-direction: $direction;
+  -moz-animation-direction: $direction;
+  -o-animation-direction: $direction;
+  animation-direction: $direction;
+}
+@mixin change {
+  @include animate(change, 15s, infinite, ease-in-out);
+}
+
+.homepage-container {
+  margin-top: 5%;
+  border: 2px solid $gray-600;
+  border-radius: 5%;
+  padding: 2%;
+  background-color: #fff;
+}
+
+@keyframes change {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+body {
+  background: linear-gradient(-45deg, #52af77, #64bd87, #82d4b2, #81ccb9);
+  background-size: 400% 400%;
+  position: relative;
+  @include change;
+}
+
+@include keyframes(change) {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0 50%;
+  }
+}

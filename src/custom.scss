@@ -1,0 +1,35 @@
+textarea:focus,
+select.form-control:focus,
+textarea.form-control:focus,
+input.form-control:focus,
+input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus,
+input[type='number']:focus,
+[type='text'].form-control:focus,
+[type='password'].form-control:focus,
+[type='email'].form-control:focus,
+[type='tel'].form-control:focus,
+[contenteditable].form-control:focus {
+  border-color: #52af77;
+  box-shadow: 0 0 0 0.1rem #52af77;
+}
+
+.form-label {
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 1.5rem;
+}
+
+button.btn,
+button.btn-primary {
+  background-color: rgba(82, 175, 119, 0.9);
+  border-color: #52af77;
+}
+
+button.btn:hover,
+button.btn-primary:hover {
+  background-color: #52af77;
+  border-color: #52af77;
+}
+
+@import '~bootstrap/scss/bootstrap';
