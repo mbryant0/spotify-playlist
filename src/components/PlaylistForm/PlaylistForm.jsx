@@ -55,13 +55,13 @@ const PlaylistForm = () => {
   const classes = useStyles();
   return (
     <Container className='homepage-container'>
-      <Container>
+      <Container className='title'>
         <h1>Spotify Playlist Generator 🎧</h1>
       </Container>
       <Container>
         <Form>
           <Form.Row>
-            <Col xs={5}>
+            <Col xs={7}>
               <Form.Group>
                 <Form.Label>PLAYLIST NAME</Form.Label>
                 <Form.Control
@@ -77,7 +77,7 @@ const PlaylistForm = () => {
                 <Form.Control type='number' min={5} max={100} size='lg' />
               </Form.Group>
             </Col>
-            <Col>
+            <Col xs={2}>
               <Form.Group>
                 <Form.Label>PLAYLIST PRIVACY? (Turn ON for Private)</Form.Label>
                 <Form.Check type='switch' id='custom-switch' />
