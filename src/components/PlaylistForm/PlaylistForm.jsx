@@ -122,7 +122,7 @@ const PlaylistForm = (props) => {
                     onChange={handleChange}
                     type='number'
                     min={5}
-                    max={100}
+                    max={50}
                     size='lg'
                   />
                 </Form.Group>
