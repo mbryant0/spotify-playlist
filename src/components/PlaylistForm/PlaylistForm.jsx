@@ -13,9 +13,11 @@ import {
   handleToken,
   handleUserInfo,
   handleFormValues,
+  handleSliderValue,
   randomizeQuery,
   handleTrackUris,
   addToPlaylist,
+  generatePlaylists,
 } from '../../redux/actions/actions';
 
 const PlaylistForm = (props) => {
@@ -52,6 +54,8 @@ const PlaylistForm = (props) => {
     privacy,
     genre,
     numSongs,
+    finalSliderValue,
+    generatePlaylists,
   } = props;
 
   console.log(
@@ -63,31 +67,14 @@ const PlaylistForm = (props) => {
     query,
     'Playlist ID: ',
     playlistId,
-    'User ID: ',
-    userId,
     'Track URIs: ',
-    trackUris,
-    'Search Results: ',
-    searchResults,
-    'Playlist Name: ',
-    playlistName,
-    'Description: ',
-    description,
-    'Privacy: ',
-    privacy,
-    'Genre: ',
-    genre,
-    'NumSongs: ',
-    numSongs
+    trackUris
   );
 
-  const generatePlaylists = (e) => {
+  /*const generatePlaylists = (e) => {
     e.preventDefault();
     Promise.resolve(
-      handleAuthURI() /*
-        .then(function (res) {
-          return handleRedirect(authUri);
-        })*/
+      handleAuthURI()
         .then(function (res) {
           return props.handleToken();
         })
@@ -97,6 +84,10 @@ const PlaylistForm = (props) => {
         .then(function (res) {
           return props.handleFormValues(formValues);
         })
+        .then(function (res) {
+          return props.handleSliderValue(sliderValue);
+        })
+
         .then(function (res) {
           return props.handlePlaylistCreation(
             userId,
@@ -110,12 +101,40 @@ const PlaylistForm = (props) => {
           return props.randomizeQuery();
         })
         .then(function (res) {
-          return props.handleSearch(query, genre, numSongs, sliderValue, token);
+          return props.handleSearch(
+            query,
+            genre,
+            finalSliderValue,
+            numSongs,
+            token
+          );
         })
         .then(function (res) {
-          return addToPlaylist(playlistId, trackUris, token);
+          return props.handleTrackUris(searchResults);
+        })
+        .then(function (res) {
+          return props.addToPlaylist(playlistId, trackUris, token);
         })
     );
+  };*/
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    generatePlaylists({
+      formValues: formValues,
+      sliderValue: sliderValue,
+      userId: userId,
+      playlistName: playlistName,
+      description: description,
+      privacy: privacy,
+      token: token,
+      query: query,
+      genre: genre,
+      finalSliderValue: finalSliderValue,
+      numSongs: numSongs,
+      searchResults: searchResults,
+      playlistId: playlistId,
+      trackUris: trackUris,
+    });
   };
   return (
     <>
@@ -124,7 +143,7 @@ const PlaylistForm = (props) => {
           <h1>Spotify Playlist Generator 🎧</h1>
         </Container>
         <Container>
-          <Form onSubmit={generatePlaylists}>
+          <Form onSubmit={handleSubmit}>
             <Form.Row>
               <Col xs={7}>
                 <Form.Group>
@@ -242,6 +261,7 @@ const mapStateToProps = (state) => {
     privacy: state.privacy,
     genre: state.genre,
     numSongs: state.numSongs,
+    finalSliderValue: state.finalSliderValue,
   };
 };
 
@@ -253,6 +273,8 @@ export default connect(mapStateToProps, {
   handleToken,
   handleTrackUris,
   handleFormValues,
+  handleSliderValue,
   handleUserInfo,
   addToPlaylist,
+  generatePlaylists,
 })(PlaylistForm);

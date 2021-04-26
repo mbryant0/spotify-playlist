@@ -11,6 +11,8 @@ const initialState = {
   privacy: false,
   genre: '',
   numSongs: '',
+  finalSliderValue: [],
+  snapShotId: '',
 };
 
 function reducer(state = initialState, action) {
@@ -30,6 +32,8 @@ function reducer(state = initialState, action) {
         genre: action.payload.genre,
         numSongs: action.payload.numSongs,
       };
+    case 'HANDLE_SLIDER_VALUE':
+      return { ...state, finalSliderValue: action.payload };
     case 'CREATE_PLAYLIST':
       return { ...state, playlistId: action.payload };
     case 'RANDOMIZE_QUERY':
@@ -38,6 +42,8 @@ function reducer(state = initialState, action) {
       return { ...state, searchResults: action.payload };
     case 'GET_TRACK_URIS':
       return { ...state, trackUris: action.payload };
+    case ' GET_SNAPSHOT_ID':
+      return { ...state, snapShotId: action.payload };
     default:
       return state;
   }
