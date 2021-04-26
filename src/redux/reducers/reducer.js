@@ -8,7 +8,7 @@ const initialState = {
   trackUris: [],
 };
 
-const reducer = (state, action) => {
+export function reducer(state = initialState, action) {
   switch (action.type) {
     case 'GET_URI':
       return { uri: action.payload };
@@ -27,6 +27,4 @@ const reducer = (state, action) => {
     default:
       return state;
   }
-};
-
-export default { reducer };
+}

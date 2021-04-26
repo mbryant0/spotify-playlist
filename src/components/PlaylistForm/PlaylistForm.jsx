@@ -4,9 +4,18 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
-import SearchSongs from '../SearchSongs/SearchSongs';
 import { genres } from '../../assets/Genres';
 import { connect } from 'react-redux';
+import {
+  handlePlaylistCreation,
+  handleSearch,
+  handleAuthURI,
+  handleToken,
+  handleUserInfo,
+  randomizeQuery,
+  handleTrackUris,
+  addToPlaylist,
+} from '../../redux/actions/actions';
 
 const PlaylistForm = (props) => {
   const [sliderValue, setSliderValue] = useState([1970, 2000]);
@@ -17,7 +26,7 @@ const PlaylistForm = (props) => {
     genre: '',
     numSongs: '',
   });
-  const [state, dispatch] = useReducer(reducer, initialState);
+  // const [state, dispatch] = useReducer(reducer, initialState);
   const handleChange = (e) => {
     const { checked, value, name, type } = e.target;
     const updatedInfo = type === 'checkbox' ? checked : value;
@@ -28,6 +37,31 @@ const PlaylistForm = (props) => {
     setSliderValue(newValue);
   };
 
+  const {
+    userId,
+    token,
+    query,
+    playlistId,
+    trackUris,
+    authUri,
+    searchResults,
+  } = props;
+  const handleRedirect = () => {
+    window.location.href = authUri;
+  };
+
+  const generatePlaylists = (e) => {
+    e.preventDefault();
+    handleAuthURI();
+    handleRedirect();
+    handleToken();
+    handleUserInfo();
+    handlePlaylistCreation(userId, formValues, token);
+    randomizeQuery();
+    handleSearch(query, formValues, sliderValue, token);
+    handleTrackUris(searchResults);
+    addToPlaylist(playlistId, trackUris, token);
+  };
   return (
     <>
       <Container className='homepage-container'>
@@ -128,24 +162,38 @@ const PlaylistForm = (props) => {
             <Form.Row>
               <Col>
                 <Form.Group>
-                  <Button type='submit'>Generate Playlist</Button>
+                  <Button onClick={generatePlaylists} type='submit'>
+                    Generate Playlist
+                  </Button>
                 </Form.Group>
               </Col>
             </Form.Row>
           </Form>
         </Container>
       </Container>
-      <button onClick={handlePlaylistCreation}>
-        5. Click to create a New Playlist!
-      </button>
-      <SearchSongs
-        playlistId={playlistId}
-        token={props.token}
-        formValues={formValues}
-        sliderValue={sliderValue}
-      />
     </>
   );
 };
 
-export default connect(null, {})(PlaylistForm);
+const mapStateToProps = (state) => {
+  return {
+    userId: state.userId,
+    token: state.token,
+    query: state.query,
+    playlistId: state.playlistId,
+    trackUris: state.trackUris,
+    authUri: state.authUri,
+    searchResults: state.searchResults,
+  };
+};
+
+export default connect(mapStateToProps, {
+  handleAuthURI,
+  handlePlaylistCreation,
+  randomizeQuery,
+  handleSearch,
+  handleToken,
+  handleTrackUris,
+  handleUserInfo,
+  addToPlaylist,
+})(PlaylistForm);
