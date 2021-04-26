@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import CustomSlider from '../CustomSlider/CustomSlider';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -12,6 +12,7 @@ import {
   handleAuthURI,
   handleToken,
   handleUserInfo,
+  handleFormValues,
   randomizeQuery,
   handleTrackUris,
   addToPlaylist,
@@ -22,7 +23,7 @@ const PlaylistForm = (props) => {
   const [formValues, setFormValues] = useState({
     playlistName: '',
     description: '',
-    public: false,
+    privacy: false,
     genre: '',
     numSongs: '',
   });
@@ -45,22 +46,90 @@ const PlaylistForm = (props) => {
     trackUris,
     authUri,
     searchResults,
+    handleAuthURI,
+    playlistName,
+    description,
+    privacy,
+    genre,
+    numSongs,
   } = props;
-  const handleRedirect = () => {
-    window.location.href = authUri;
+
+  console.log(
+    'Auth URI: ',
+    authUri,
+    'Token: ',
+    token,
+    'Query: ',
+    query,
+    'Playlist ID: ',
+    playlistId,
+    'User ID: ',
+    userId,
+    'Track URIs: ',
+    trackUris,
+    'Search Results: ',
+    searchResults,
+    'Playlist Name: ',
+    playlistName,
+    'Description: ',
+    description,
+    'Privacy: ',
+    privacy,
+    'Genre: ',
+    genre,
+    'NumSongs: ',
+    numSongs
+  );
+
+  const handleRedirect = (uri) => {
+    window.location.href = uri;
+    return false;
   };
 
   const generatePlaylists = (e) => {
     e.preventDefault();
-    handleAuthURI();
-    handleRedirect();
-    handleToken();
-    handleUserInfo();
-    handlePlaylistCreation(userId, formValues, token);
-    randomizeQuery();
-    handleSearch(query, formValues, sliderValue, token);
-    handleTrackUris(searchResults);
-    addToPlaylist(playlistId, trackUris, token);
+    Promise.resolve(
+      handleAuthURI() /*
+        .then(function (res) {
+          return handleRedirect(authUri);
+        })*/
+        .then(function (res) {
+          return props.handleToken();
+        })
+        .then(function (res) {
+          return props.handleUserInfo();
+        })
+        .then(function (res) {
+          return props.handleFormValues(formValues);
+        })
+        .then(function (res) {
+          return props.handlePlaylistCreation(
+            userId,
+            playlistName,
+            description,
+            privacy,
+            token
+          );
+        })
+        .then(function (res) {
+          return props.randomizeQuery();
+        })
+        .then(function (res) {
+          return props.handleSearch(query, genre, numSongs, sliderValue, token);
+        })
+        .then(function (res) {
+          return addToPlaylist(playlistId, trackUris, token);
+        })
+    );
+
+    //window.location.href = authUri;
+    //props.handleToken();
+    // handleUserInfo();
+    //handlePlaylistCreation(userId, formValues, token);
+    //props.randomizeQuery();
+    //handleSearch(query, formValues, sliderValue, token);
+    // handleTrackUris(searchResults);
+    // addToPlaylist(playlistId, trackUris, token);
   };
   return (
     <>
@@ -69,7 +138,7 @@ const PlaylistForm = (props) => {
           <h1>Spotify Playlist Generator 🎧</h1>
         </Container>
         <Container>
-          <Form>
+          <Form onSubmit={generatePlaylists}>
             <Form.Row>
               <Col xs={7}>
                 <Form.Group>
@@ -102,8 +171,8 @@ const PlaylistForm = (props) => {
                 <Form.Group>
                   <Form.Label>PLAYLIST PUBLIC? (Turn ON for Public)</Form.Label>
                   <Form.Check
-                    name='public'
-                    checked={formValues.public}
+                    name='privacy'
+                    checked={formValues.privacy}
                     onChange={handleChange}
                     type='switch'
                     id='custom-switch'
@@ -162,9 +231,7 @@ const PlaylistForm = (props) => {
             <Form.Row>
               <Col>
                 <Form.Group>
-                  <Button onClick={generatePlaylists} type='submit'>
-                    Generate Playlist
-                  </Button>
+                  <Button type='submit'>Generate Playlist</Button>
                 </Form.Group>
               </Col>
             </Form.Row>
@@ -184,6 +251,11 @@ const mapStateToProps = (state) => {
     trackUris: state.trackUris,
     authUri: state.authUri,
     searchResults: state.searchResults,
+    playlistName: state.playlistName,
+    description: state.description,
+    privacy: state.privacy,
+    genre: state.genre,
+    numSongs: state.numSongs,
   };
 };
 
@@ -194,6 +266,7 @@ export default connect(mapStateToProps, {
   handleSearch,
   handleToken,
   handleTrackUris,
+  handleFormValues,
   handleUserInfo,
   addToPlaylist,
 })(PlaylistForm);

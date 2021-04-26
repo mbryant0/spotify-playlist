@@ -6,25 +6,41 @@ const initialState = {
   query: '',
   searchResults: [],
   trackUris: [],
+  playlistName: '',
+  description: '',
+  privacy: false,
+  genre: '',
+  numSongs: '',
 };
 
-export function reducer(state = initialState, action) {
+function reducer(state = initialState, action) {
   switch (action.type) {
     case 'GET_URI':
-      return { uri: action.payload };
+      return { ...state, authUri: action.payload };
     case 'HANDLE_TOKEN':
-      return { token: action.payload };
+      return { ...state, token: action.payload };
     case 'GET_USER_INFO':
-      return { userId: action.payload };
+      return { ...state, userId: action.payload };
+    case 'HANDLE_FORM_VALUES':
+      return {
+        ...state,
+        playlistName: action.payload.playlistName,
+        description: action.payload.description,
+        privacy: action.payload.privacy,
+        genre: action.payload.genre,
+        numSongs: action.payload.numSongs,
+      };
     case 'CREATE_PLAYLIST':
-      return { playlistId: action.payload };
+      return { ...state, playlistId: action.payload };
     case 'RANDOMIZE_QUERY':
-      return { query: action.payload };
+      return { ...state, query: action.payload };
     case 'SEARCH_SONGS':
-      return { searchResults: action.payload };
+      return { ...state, searchResults: action.payload };
     case 'GET_TRACK_URIS':
-      return { trackUris: action.payload };
+      return { ...state, trackUris: action.payload };
     default:
       return state;
   }
 }
+
+export default reducer;
