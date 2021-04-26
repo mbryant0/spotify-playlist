@@ -59,82 +59,37 @@ const PlaylistForm = (props) => {
   } = props;
 
   console.log(
-    'Auth URI: ',
-    authUri,
+    'user id:',
+    userId,
     'Token: ',
     token,
     'Query: ',
     query,
-    'Playlist ID: ',
+    'Playlist Id: ',
     playlistId,
     'Track URIs: ',
-    trackUris
+    trackUris,
+    'Auth URI: ',
+    authUri,
+    'Search Results: ',
+    searchResults,
+    'Playlist Name: ',
+    playlistName,
+    'Description: ',
+    description,
+    'Privacy: ',
+    privacy,
+    'Genre: ',
+    genre,
+    'NumSongs: ',
+    numSongs,
+    'FInal Slider Value: ',
+    finalSliderValue
   );
 
-  /*const generatePlaylists = (e) => {
-    e.preventDefault();
-    Promise.resolve(
-      handleAuthURI()
-        .then(function (res) {
-          return props.handleToken();
-        })
-        .then(function (res) {
-          return props.handleUserInfo();
-        })
-        .then(function (res) {
-          return props.handleFormValues(formValues);
-        })
-        .then(function (res) {
-          return props.handleSliderValue(sliderValue);
-        })
-
-        .then(function (res) {
-          return props.handlePlaylistCreation(
-            userId,
-            playlistName,
-            description,
-            privacy,
-            token
-          );
-        })
-        .then(function (res) {
-          return props.randomizeQuery();
-        })
-        .then(function (res) {
-          return props.handleSearch(
-            query,
-            genre,
-            finalSliderValue,
-            numSongs,
-            token
-          );
-        })
-        .then(function (res) {
-          return props.handleTrackUris(searchResults);
-        })
-        .then(function (res) {
-          return props.addToPlaylist(playlistId, trackUris, token);
-        })
-    );
-  };*/
   const handleSubmit = (e) => {
     e.preventDefault();
-    generatePlaylists({
-      formValues: formValues,
-      sliderValue: sliderValue,
-      userId: userId,
-      playlistName: playlistName,
-      description: description,
-      privacy: privacy,
-      token: token,
-      query: query,
-      genre: genre,
-      finalSliderValue: finalSliderValue,
-      numSongs: numSongs,
-      searchResults: searchResults,
-      playlistId: playlistId,
-      trackUris: trackUris,
-    });
+    generatePlaylists({ formValues: formValues, sliderValue: sliderValue });
   };
   return (
     <>
