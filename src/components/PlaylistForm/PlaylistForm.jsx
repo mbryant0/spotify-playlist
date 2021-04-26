@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CustomSlider from '../CustomSlider/CustomSlider';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -81,11 +81,6 @@ const PlaylistForm = (props) => {
     numSongs
   );
 
-  const handleRedirect = (uri) => {
-    window.location.href = uri;
-    return false;
-  };
-
   const generatePlaylists = (e) => {
     e.preventDefault();
     Promise.resolve(
@@ -121,15 +116,6 @@ const PlaylistForm = (props) => {
           return addToPlaylist(playlistId, trackUris, token);
         })
     );
-
-    //window.location.href = authUri;
-    //props.handleToken();
-    // handleUserInfo();
-    //handlePlaylistCreation(userId, formValues, token);
-    //props.randomizeQuery();
-    //handleSearch(query, formValues, sliderValue, token);
-    // handleTrackUris(searchResults);
-    // addToPlaylist(playlistId, trackUris, token);
   };
   return (
     <>
