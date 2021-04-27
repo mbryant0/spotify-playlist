@@ -64,4 +64,3 @@ public class H2ServerConfiguration
                 .start();
     }
 }
-

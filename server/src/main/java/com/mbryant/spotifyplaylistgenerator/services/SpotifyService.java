@@ -18,7 +18,7 @@ public class SpotifyService
 {
     //    Create the redirect URI for spotify API
     private final URI redirectUri = SpotifyHttpManager
-            .makeUri( "http://localhost:2019" + Constants.REDIRECT);
+            .makeUri( "http://localhost:2025" + Constants.REDIRECT);
 
     //    Create the spotifyAPI wrapper instance for future use
     private final SpotifyApi spotifyApi = new SpotifyApi.Builder()

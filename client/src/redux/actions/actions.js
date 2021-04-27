@@ -15,7 +15,7 @@ export const GET_SNAPSHOT_ID = 'GET_SNAPSHOT_ID';
 
 export const handleAuthURI = () => (dispatch) => {
   return axios
-    .get('http://localhost:2019/authorize')
+    .get('/api/authorize')
     .then((res) => {
       dispatch({ type: GET_URI, payload: res.data });
       console.log('1');
@@ -29,7 +29,7 @@ export const handleAuthURI = () => (dispatch) => {
 
 export const handleToken = () => (dispatch) => {
   return axios
-    .get('http://localhost:2019/token')
+    .get('/api/token')
     .then((res) => {
       dispatch({ type: HANDLE_TOKEN, payload: res.data });
       console.log('2');
@@ -43,7 +43,7 @@ export const handleToken = () => (dispatch) => {
 
 export const handleUserInfo = () => (dispatch) => {
   return axios
-    .get('http://localhost:2019/me')
+    .get('/api/me')
     .then((res) => {
       dispatch({ type: GET_USER_INFO, payload: res.data.id });
       console.log('3');
@@ -80,7 +80,7 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
   const token = state.token;
   return axios
     .post(
-      `https://api.spotify.com/v1/users/${userId}/playlists`,
+      `/spotifyapi/v1/users/${userId}/playlists`,
       {
         name: playlistName,
         description: description,
@@ -119,7 +119,7 @@ export const handleSearch = () => (dispatch, getState) => {
   const token = state.token;
   return axios
     .get(
-      `https://api.spotify.com/v1/search?query=${query}*+genre%3A${genre}+year%3A+${finalSliderValue[0]}-${finalSliderValue[1]}&type=track&offset=0&limit=${numSongs}`,
+      `/spotifyapi/v1/search?query=${query}*+genre%3A${genre}+year%3A+${finalSliderValue[0]}-${finalSliderValue[1]}&type=track&offset=0&limit=${numSongs}`,
       { headers: { Authorization: 'Bearer' + ' ' + token } }
     )
     .then((res) => {
@@ -151,7 +151,7 @@ export const addToPlaylist = () => (dispatch, getState) => {
   const token = state.token;
   return axios
     .post(
-      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      `/spotifyapi/v1/playlists/${playlistId}/tracks`,
       { uris: trackUris },
       { headers: { Authorization: 'Bearer' + ' ' + token } }
     )
