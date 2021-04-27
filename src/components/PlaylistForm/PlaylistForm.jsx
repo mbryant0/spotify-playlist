@@ -6,21 +6,10 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { genres } from '../../assets/Genres';
 import { connect } from 'react-redux';
-import {
-  handlePlaylistCreation,
-  handleSearch,
-  handleAuthURI,
-  handleToken,
-  handleUserInfo,
-  handleFormValues,
-  handleSliderValue,
-  randomizeQuery,
-  handleTrackUris,
-  addToPlaylist,
-  generatePlaylists,
-} from '../../redux/actions/actions';
+import { generatePlaylists } from '../../redux/actions/actions';
 
 const PlaylistForm = (props) => {
+  const { token, authUri, generatePlaylists } = props;
   const [sliderValue, setSliderValue] = useState([1970, 2000]);
   const [formValues, setFormValues] = useState({
     playlistName: '',
@@ -29,7 +18,7 @@ const PlaylistForm = (props) => {
     genre: '',
     numSongs: '',
   });
-  // const [state, dispatch] = useReducer(reducer, initialState);
+
   const handleChange = (e) => {
     const { checked, value, name, type } = e.target;
     const updatedInfo = type === 'checkbox' ? checked : value;
@@ -40,57 +29,12 @@ const PlaylistForm = (props) => {
     setSliderValue(newValue);
   };
 
-  const {
-    userId,
-    token,
-    query,
-    playlistId,
-    trackUris,
-    authUri,
-    searchResults,
-    handleAuthURI,
-    playlistName,
-    description,
-    privacy,
-    genre,
-    numSongs,
-    finalSliderValue,
-    generatePlaylists,
-  } = props;
-
-  console.log(
-    'user id:',
-    userId,
-    'Token: ',
-    token,
-    'Query: ',
-    query,
-    'Playlist Id: ',
-    playlistId,
-    'Track URIs: ',
-    trackUris,
-    'Auth URI: ',
-    authUri,
-    'Search Results: ',
-    searchResults,
-    'Playlist Name: ',
-    playlistName,
-    'Description: ',
-    description,
-    'Privacy: ',
-    privacy,
-    'Genre: ',
-    genre,
-    'NumSongs: ',
-    numSongs,
-    'FInal Slider Value: ',
-    finalSliderValue
-  );
-
   const handleSubmit = (e) => {
     e.preventDefault();
     generatePlaylists({ formValues: formValues, sliderValue: sliderValue });
   };
+
+  console.log('Token: ', token, 'Auth URI: ', authUri);
   return (
     <>
       <Container className='homepage-container'>
@@ -204,32 +148,11 @@ const PlaylistForm = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.userId,
     token: state.token,
-    query: state.query,
-    playlistId: state.playlistId,
-    trackUris: state.trackUris,
     authUri: state.authUri,
-    searchResults: state.searchResults,
-    playlistName: state.playlistName,
-    description: state.description,
-    privacy: state.privacy,
-    genre: state.genre,
-    numSongs: state.numSongs,
-    finalSliderValue: state.finalSliderValue,
   };
 };
 
 export default connect(mapStateToProps, {
-  handleAuthURI,
-  handlePlaylistCreation,
-  randomizeQuery,
-  handleSearch,
-  handleToken,
-  handleTrackUris,
-  handleFormValues,
-  handleSliderValue,
-  handleUserInfo,
-  addToPlaylist,
   generatePlaylists,
 })(PlaylistForm);

@@ -25,7 +25,8 @@ export const handleAuthURI = () => (dispatch) => {
     });
 };
 
-// Step 3: Put Token in State
+// Step 2: Save Token in State
+
 export const handleToken = () => (dispatch) => {
   return axios
     .get('http://localhost:2019/token')
@@ -38,7 +39,7 @@ export const handleToken = () => (dispatch) => {
     });
 };
 
-// Step 4: Save User Info in State
+// Step 3: Save User Info in State
 
 export const handleUserInfo = () => (dispatch) => {
   return axios
@@ -51,18 +52,25 @@ export const handleUserInfo = () => (dispatch) => {
       console.log('Error occurred while retrieving profile information', err);
     });
 };
+
+// Step 4: Save Form Values in State
+
 export const handleFormValues = (data) => (dispatch) => {
   dispatch({ type: HANDLE_FORM_VALUES, payload: data });
   console.log('4');
   return data;
 };
 
+// Step 5: Save Slider Values in State
+
 export const handleSliderValue = (data) => (dispatch) => {
   dispatch({ type: HANDLE_SLIDER_VALUE, payload: data });
   console.log('5');
   return data;
 };
-// Step 5: Create a New Playlist
+
+// Step 6: Create a New Playlist
+
 export const handlePlaylistCreation = () => (dispatch, getState) => {
   let state = getState();
   const userId = state.userId;
@@ -89,7 +97,7 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
     });
 };
 
-// Step 6: Get Query Seed
+// Step 7: Retrieve Query Seed
 
 export const randomizeQuery = () => (dispatch) => {
   var result = '';
@@ -100,7 +108,8 @@ export const randomizeQuery = () => (dispatch) => {
   return result;
 };
 
-// Step 7: Search for songs
+// Step 8: Search for songs
+
 export const handleSearch = () => (dispatch, getState) => {
   let state = getState();
   const query = state.query;
@@ -121,7 +130,9 @@ export const handleSearch = () => (dispatch, getState) => {
       console.log('Error: ', err);
     });
 };
-// Step 8: Get URIs
+
+// Step 9: Retrieve Track URIs from Search Results
+
 export const handleTrackUris = () => (dispatch, getState) => {
   let state = getState();
   const searchResults = state.searchResults;
@@ -130,7 +141,8 @@ export const handleTrackUris = () => (dispatch, getState) => {
   console.log('9');
   return uriList;
 };
-// Step 9: Add Songs to playlist
+
+// Step 10: Add Songs to playlist
 
 export const addToPlaylist = () => (dispatch, getState) => {
   let state = getState();
@@ -150,6 +162,8 @@ export const addToPlaylist = () => (dispatch, getState) => {
     })
     .catch((err) => console.log(err));
 };
+
+// Step 11: Combine all action creators in sequential order
 
 export const generatePlaylists = (data) => (dispatch) => {
   dispatch(handleAuthURI())
