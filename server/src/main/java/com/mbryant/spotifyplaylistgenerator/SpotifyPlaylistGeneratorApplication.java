@@ -13,3 +13,5 @@ public class SpotifyPlaylistGeneratorApplication
     }
 
 }
+
+// Build Command: java -jar target/spotify-playlist-generator-0.0.1-SNAPSHOT.jar
