@@ -9,7 +9,9 @@ export const SEARCH_SONGS = 'SEARCH_SONGS';
 export const GET_TRACK_URIS = 'GET_TRACK_URIS';
 export const HANDLE_FORM_VALUES = 'HANDLE_FORM_VALUES';
 export const HANDLE_SLIDER_VALUE = 'HANDLE_SLIDER_VALUE';
-export const GET_SNAPSHOT_ID = 'GET_SNAPSHOT_ID';
+export const RANDOMIZE_OFFSET = 'RANDOMIZE_OFFSET';
+export const GET_PLAYLIST_URL = 'GET_PLAYLIST_URL';
+export const SUCCESS_ALERT = 'SUCCESS_ALERT';
 
 // Step 1: Begin Authorization
 
@@ -99,7 +101,7 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
 
 // Step 7: Retrieve Query Seed
 
-export const randomizeQuery = () => (dispatch) => {
+export const randomizeQuery = (length) => (dispatch) => {
   var result = '';
   result =
     randomCharacters[Math.floor(Math.random() * randomCharacters.length)];
@@ -108,7 +110,16 @@ export const randomizeQuery = () => (dispatch) => {
   return result;
 };
 
-// Step 8: Search for songs
+// Step 8: Retrieve offset
+export const randomizeOffset = () => (dispatch) => {
+  var result = '';
+  result = Math.floor(Math.random() * 500 + 1);
+  dispatch({ type: RANDOMIZE_OFFSET, payload: result });
+  console.log('8: The offset is: ', result);
+  return result;
+};
+
+// Step 9: Search for songs
 
 export const handleSearch = () => (dispatch, getState) => {
   let state = getState();
@@ -117,32 +128,33 @@ export const handleSearch = () => (dispatch, getState) => {
   const finalSliderValue = state.finalSliderValue;
   const numSongs = state.numSongs;
   const token = state.token;
+  const offset = state.offset;
   return axios
     .get(
-      `/spotifyapi/v1/search?query=${query}*+genre%3A${genre}+year%3A+${finalSliderValue[0]}-${finalSliderValue[1]}&type=track&offset=0&limit=${numSongs}`,
+      `/spotifyapi/v1/search?query=${query}*+genre%3A${genre}+year%3A+${finalSliderValue[0]}-${finalSliderValue[1]}&type=track&offset=${offset}&limit=${numSongs}`,
       { headers: { Authorization: 'Bearer' + ' ' + token } }
     )
     .then((res) => {
       dispatch({ type: SEARCH_SONGS, payload: res.data.tracks.items });
-      console.log('8');
+      console.log('9');
     })
     .catch((err) => {
-      console.log('Error: ', err);
+      console.log('Err: ', err);
     });
 };
 
-// Step 9: Retrieve Track URIs from Search Results
+// Step 10: Retrieve Track URIs from Search Results
 
 export const handleTrackUris = () => (dispatch, getState) => {
   let state = getState();
   const searchResults = state.searchResults;
   let uriList = [...new Set(searchResults.map((song) => song.uri))];
   dispatch({ type: GET_TRACK_URIS, payload: uriList });
-  console.log('9');
+  console.log('10');
   return uriList;
 };
 
-// Step 10: Add Songs to playlist
+// Step 11: Add Songs to playlist
 
 export const addToPlaylist = () => (dispatch, getState) => {
   let state = getState();
@@ -156,8 +168,9 @@ export const addToPlaylist = () => (dispatch, getState) => {
       { headers: { Authorization: 'Bearer' + ' ' + token } }
     )
     .then((res) => {
-      console.log('Success adding to playlist!');
-      dispatch({ type: GET_SNAPSHOT_ID, payload: res.snapshot_id });
+      console.log(res);
+      dispatch({ type: GET_PLAYLIST_URL, payload: res.config.url });
+      dispatch({ type: SUCCESS_ALERT, payload: true });
       return res.snapshot_id;
     })
     .catch((err) => console.log(err));
@@ -184,6 +197,9 @@ export const generatePlaylists = (data) => (dispatch) => {
     })
     .then(() => {
       return dispatch(randomizeQuery());
+    })
+    .then(() => {
+      return dispatch(randomizeOffset());
     })
     .then(() => {
       return dispatch(handleSearch());

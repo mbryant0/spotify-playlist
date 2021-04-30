@@ -23,9 +23,6 @@ npm start
 
 ### MVP
 
-[ ] Debug the part of application that sends user to different page to
-authenticate - automatically reroute back to localhost:3000
-
 [ ] Add alerts to let user know their playlist has successfully been created
 (with hyperlinked URL that they can click on to see it in Spotify), or when
 there are errors with their input / the server
@@ -35,9 +32,6 @@ start, etc) to README
 
 [ ] Remove miscellaneous files, console.logs, and boilerplate...
 
-[ ] Deploy application on Heroku so that everyone can use it!
-
 ### Stretch Goals
 
-[ ] Add additional genres [ ] Add the green color to list of Bootstrap theme
-colors for reusability
+[ ] Add the green color to list of Bootstrap theme colors for reusability

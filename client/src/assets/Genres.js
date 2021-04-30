@@ -5,85 +5,93 @@ export const genres = [
     attributes: { disabled: true, selected: true },
   },
   { text: '<POP>', value: 'POP', attributes: { disabled: true } },
-  { text: 'Britpop', value: 'Britpop' },
+
+  { text: 'Electropop', value: 'electropop' },
   { text: 'Hyperpop', value: 'hyperpop' },
   { text: 'Indie Pop', value: 'indie+pop' },
   { text: 'J-Pop', value: 'japanese+pop' },
-  { text: 'K-Pop', value: 'korean+pop' },
+  { text: 'K-Pop', value: 'k-pop' },
   { text: 'Pop', value: 'Pop' },
   { text: 'Synth Pop', value: 'synth+pop' },
   { text: '<HIP-HOP>', value: 'HIP-HOP', attributes: { disabled: true } },
   { text: 'Hip Hop', value: 'hip+hop' },
   { text: 'Rap', value: 'rap' },
-  { text: 'Underground Hip Hop', value: 'underground+hip+hop' },
-  { text: 'Instrumental Hip Hop', value: 'instrumental+hip+hop' },
   { text: 'Trap', value: 'trap' },
   { text: 'Hardcore Hip Hop', value: 'hardcore+hip+hop' },
   { text: 'Grime', value: 'grime' },
   { text: '<R&B>', value: 'R&B', attributes: { disabled: true } },
-  { text: 'R&B', value: 'R&B' },
   { text: 'Soul', value: 'Soul' },
   { text: 'Funk', value: 'funk' },
+  { text: 'Indie Soul', value: 'indie+soul' },
+  { text: 'Gospel', value: 'gospel' },
   { text: '<ELECTRONIC>', value: 'ELECTRONIC', attributes: { disabled: true } },
   { text: 'Electronic', value: 'Electronic' },
-  { text: 'House', value: 'House' },
+  { text: 'Electronica', value: 'electronica' },
+  { text: 'Microhouse', value: 'microhouse' },
+  { text: 'Wonky', value: 'wonky' },
   { text: 'Downtempo', value: 'Downtempo' },
+  { text: 'Jazztronica', value: 'jazztronica' },
   { text: 'Techno', value: 'Techno' },
   { text: 'Dubstep', value: 'Dubstep' },
   { text: 'EDM', value: 'EDM' },
   { text: 'IDM', value: 'IDM' },
+  { text: 'Tropical House', value: 'tropical' },
   { text: 'Chiptune', value: 'Chiptune' },
-  { text: 'Chillwave', value: 'Chillwave' },
+  { text: 'Synthwave', value: 'synthwave' },
+  {
+    text: '<ALTERNATIVE>',
+    value: 'ALTERNATIVE',
+    attributes: { disabled: true },
+  },
+  { text: 'Britpop', value: 'Britpop' },
+  { text: 'Experimental', value: 'experimental' },
   { text: 'Vaporwave', value: 'vaporwave' },
+  { text: 'Shoegaze', value: 'shoegaze' },
+  { text: 'Chillwave', value: 'Chillwave' },
+  { text: 'Popgaze', value: 'popgaze' },
+  { text: 'Neo-psychedelic', value: 'neo-psychedelic' },
+  { text: '<ROCK>', value: 'ROCK', attributes: { disabled: true } },
+  { text: 'Rock', value: 'rock' },
+  { text: 'Dance-punk', value: 'dance-punk' },
+  { text: 'Alternative Metal', value: 'alternative+metal' },
+  { text: 'Indie Rock', value: 'indie+rock' },
+  { text: 'Grunge', value: 'grunge' },
+  { text: 'Punk', value: 'punk' },
+  { text: 'Emo', value: 'Emo' },
+  { text: 'Art Rock', value: 'art+rock' },
+  { text: 'Psychedelic Rock (Classic)', value: 'psychedelic+rock' },
+  { text: 'Hard Rock', value: 'hard+rock' },
+  { text: 'Garage Rock', value: 'garage+rock' },
+  { text: 'Surf Rock', value: 'surf+rock' },
+  { text: 'Math Rock', value: 'math+rock' },
+  { text: 'Rockabilly', value: 'rockabilly' },
+  { text: 'Metal', value: 'metal' },
+  { text: '<COUNTRY>', value: 'COUNTRY', attributes: { disabled: true } },
+  { text: 'Country', value: 'country' },
+  { text: 'Folk', value: 'folk' },
+  { text: 'Indie folk', value: 'indie+folk' },
+  { text: 'Acoustic', value: 'acoustic' },
+  { text: '<JAZZ>', value: 'JAZZ', attributes: { disabled: true } },
+  { text: 'Jazz', value: 'jazz' },
+  { text: 'Swing', value: 'swing' },
+  { text: '<WORLD>', value: 'world', attributes: { disabled: true } },
+  { text: 'Latin', value: 'latin' },
+  { text: 'Brazilian', value: 'brazilian' },
+  { text: 'Cumbia', value: 'cumbia' },
+  { text: 'Flamenco', value: 'flamenco' },
+  { text: 'Salsa', value: 'salsa' },
+  { text: 'Reggae', value: 'reggae' },
+  { text: 'Reggaeton', value: 'reggaeton' },
+  { text: 'Bachata', value: 'bachata' },
+  { text: 'African', value: 'african' },
+  { text: 'Afropop', value: 'afropop' },
+  { text: 'Celtic', value: 'celtic' },
+  { text: 'Balkan', value: 'balkan' },
+  { text: 'Devotional', value: 'devotional' },
+  { text: '<MISC>', value: 'MISC', attributes: { disabled: true } },
+  { text: 'Soundtrack', value: 'soundtrack' },
+  { text: 'Classical', value: 'classical' },
+  { text: 'Kids', value: 'kids' },
 ];
 
 export default { genres };
-/*
-
-ADD THESE GENRES LATER ONCE YOU GET IT WORKING
-                  <option>Synthwave</option>
-                  <option>Experimental</option>
-                  <option>Ambient</option>
-                  <option>Alternative</option>
-                  <option>Indie Rock</option>
-                  <option>Shoegaze</option>
-                  <option>Grunge</option>
-                  <option>Dream pop</option>
-                  <option>Jazz</option>
-                  <option>Fusion</option>
-                  <option>Swing</option>
-                  <option>Punk</option>
-                  <option>Emo</option>
-                  <option>Rock</option>
-                  <option>Progressive Rock</option>
-                  <option>Psychedelic Rock</option>
-                  <option>Hard Rock</option>
-                  <option>Garage Rock</option>
-                  <option>Surf Rock</option>
-                  <option>Math Rock</option>
-                  <option>Rockabilly</option>
-                  <option>Metal</option>
-                  <option>Folk</option>
-                  <option>Indie Folk</option>
-                  <option>Country</option>
-                  <option>Acoustic</option>
-                  <option>Soundtrack</option>
-                  <option>Classical</option>
-                  <option>Kids</option>
-                  <option>Devotional</option>
-                  <option>Gospel</option>
-                  <option>Latin</option>
-                  <option>Brazilian</option>
-                  <option>Cumbia</option>
-                  <option>Tango</option>
-                  <option>Latin Rock</option>
-                  <option>Flamenco</option>
-                  <option>Salsa</option>
-                  <option>Reggaeton</option>
-                  <option>Bachata</option>
-                  <option>African</option>
-                  <option>Tropical</option>
-                  <option>Celtic</option>
-                  <option>Balkan</option>
-
-                */

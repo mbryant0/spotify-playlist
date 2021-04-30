@@ -8,7 +8,9 @@ import {
   GET_TRACK_URIS,
   HANDLE_FORM_VALUES,
   HANDLE_SLIDER_VALUE,
-  GET_SNAPSHOT_ID,
+  RANDOMIZE_OFFSET,
+  SUCCESS_ALERT,
+  GET_PLAYLIST_URL,
 } from '../actions/actions';
 
 const initialState = {
@@ -25,7 +27,10 @@ const initialState = {
   genre: '',
   numSongs: '',
   finalSliderValue: [],
+  offset: '',
   snapShotId: '',
+  playlistUrl: '',
+  success: false,
 };
 
 function reducer(state = initialState, action) {
@@ -51,12 +56,16 @@ function reducer(state = initialState, action) {
       return { ...state, playlistId: action.payload };
     case RANDOMIZE_QUERY:
       return { ...state, query: action.payload };
+    case RANDOMIZE_OFFSET:
+      return { ...state, offset: action.payload };
     case SEARCH_SONGS:
       return { ...state, searchResults: action.payload };
     case GET_TRACK_URIS:
       return { ...state, trackUris: action.payload };
-    case GET_SNAPSHOT_ID:
-      return { ...state, snapShotId: action.payload };
+    case GET_PLAYLIST_URL:
+      return { ...state, playlistUrl: action.payload };
+    case SUCCESS_ALERT:
+      return { ...state, success: action.payload };
     default:
       return state;
   }

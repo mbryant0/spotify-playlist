@@ -4,12 +4,20 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import { genres } from '../../assets/Genres';
 import { connect } from 'react-redux';
 import { generatePlaylists } from '../../redux/actions/actions';
 
 const PlaylistForm = (props) => {
-  const { token, authUri, generatePlaylists } = props;
+  const {
+    token,
+    authUri,
+    generatePlaylists,
+    query,
+    playlistUrl,
+    success,
+  } = props;
   const [sliderValue, setSliderValue] = useState([1970, 2000]);
   const [formValues, setFormValues] = useState({
     playlistName: '',
@@ -34,7 +42,16 @@ const PlaylistForm = (props) => {
     generatePlaylists({ formValues: formValues, sliderValue: sliderValue });
   };
 
-  console.log('Token: ', token, 'Auth URI: ', authUri);
+  console.log(
+    'Token: ',
+    token,
+    'Auth URI: ',
+    authUri,
+    'Query: ',
+    query,
+    'Playlist URL: ',
+    playlistUrl
+  );
   return (
     <>
       <Container className='homepage-container'>
@@ -139,6 +156,16 @@ const PlaylistForm = (props) => {
                 </Form.Group>
               </Col>
             </Form.Row>
+            <Form.Row>
+              <Col>
+                {success && (
+                  <Alert variant='success'>
+                    Your playlist has successfully been created. You may view it{' '}
+                    <Alert.Link href={playlistUrl}>here</Alert.Link>.
+                  </Alert>
+                )}
+              </Col>
+            </Form.Row>
           </Form>
         </Container>
       </Container>
@@ -150,6 +177,9 @@ const mapStateToProps = (state) => {
   return {
     token: state.token,
     authUri: state.authUri,
+    query: state.query,
+    success: state.success,
+    playlistUrl: state.playlistUrl,
   };
 };
 
