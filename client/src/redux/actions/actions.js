@@ -127,6 +127,7 @@ export const randomizeQuery = (length) => (dispatch) => {
 };
 
 // Step 8: Retrieve offset
+
 export const randomizeOffset = () => (dispatch) => {
   var result = '';
   result = Math.floor(Math.random() * 500 + 1);

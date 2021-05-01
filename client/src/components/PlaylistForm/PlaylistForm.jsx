@@ -14,13 +14,14 @@ const PlaylistForm = (props) => {
   const {
     authUri,
     generatePlaylists,
-    query,
     playlistUrl,
     success,
     active,
     alertMessage,
     variant,
   } = props;
+
+  // Setting Initial State Values
 
   const [sliderValue, setSliderValue] = useState([1970, 2000]);
   const [formValues, setFormValues] = useState({
@@ -30,6 +31,9 @@ const PlaylistForm = (props) => {
     genre: '',
     numSongs: '',
   });
+
+  // Setting Form Authentication Requirements
+
   const schema = yup.object().shape({
     playlistName: yup.string().required('Playlist name is required.'),
     description: yup.string(),
@@ -38,7 +42,9 @@ const PlaylistForm = (props) => {
     numSongs: yup.string().required('Number of songs is required.'),
   });
 
-  const [errors, setErrors] = useState({
+  // Setting Error Messages Depending if User Input Matches Schema
+
+  const [errorMessages, setErrorMessages] = useState({
     playlistName: '',
     genre: '',
     numSongs: '',
@@ -49,12 +55,14 @@ const PlaylistForm = (props) => {
       .reach(schema, name)
       .validate(value)
       .then(() => {
-        setErrors({ ...errors, [name]: '' });
+        setErrorMessages({ ...errorMessages, [name]: '' });
       })
       .catch((err) => {
-        setErrors({ ...errors, [name]: err.errors[0] });
+        setErrorMessages({ ...errorMessages, [name]: err.errorMessages[0] });
       });
   };
+
+  // Updating State W/ User Input
 
   const handleChange = (e) => {
     const { checked, value, name, type } = e.target;
@@ -62,7 +70,6 @@ const PlaylistForm = (props) => {
     setFormErrors(name, updatedInfo);
     setFormValues({ ...formValues, [name]: updatedInfo });
   };
-
   const handleSliderChange = (event, newValue) => {
     setSliderValue(newValue);
   };
@@ -72,13 +79,15 @@ const PlaylistForm = (props) => {
     generatePlaylists({ formValues: formValues, sliderValue: sliderValue });
   };
 
-  console.log('Auth URI: ', authUri, 'Query: ', query);
+  console.log('Auth URI: ', authUri);
+
+  // Disabling Submit Button Unless It Matches Form Authentication Schema
 
   const [disabled, setDisabled] = useState(true);
-
   useEffect(() => {
     schema.isValid(formValues).then((valid) => setDisabled(!valid));
   }, [formValues]);
+
   return (
     <>
       <Container className='homepage-container'>
@@ -193,7 +202,7 @@ const PlaylistForm = (props) => {
                   variant='success'
                   style={{ visibility: success ? 'visible' : 'hidden' }}
                 >
-                  Your playlist has successfully been created. You may view it{' '}
+                  Your playlist has successfully been created. You may view it
                   <Alert.Link href={playlistUrl}>here</Alert.Link>.
                 </Alert>
               </Col>
