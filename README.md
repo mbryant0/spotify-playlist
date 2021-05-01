@@ -13,6 +13,7 @@ Clone down this repository. You will need `node` and `npm` installed globally on
 your machine. **Install dependencies and start server:**
 
 ```sh
+cd ./client/
 npm i
 npm start
 ```
@@ -21,17 +22,5 @@ npm start
 
 ## Upcoming Features
 
-### MVP
-
-[ ] Add alerts to let user know their playlist has successfully been created
-(with hyperlinked URL that they can click on to see it in Spotify), or when
-there are errors with their input / the server
-
-[ ] Add information on how to host the application locally (npm install, npm
-start, etc) to README
-
-[ ] Remove miscellaneous files, console.logs, and boilerplate...
-
-### Stretch Goals
-
-[ ] Add the green color to list of Bootstrap theme colors for reusability
+[ ] Add the green color to list of Bootstrap theme colors for reusability [ ]
+Receive code review [ ] Create a demo vido
