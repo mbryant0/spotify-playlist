@@ -11,6 +11,10 @@ import {
   RANDOMIZE_OFFSET,
   SUCCESS_ALERT,
   GET_PLAYLIST_URL,
+  LOADING_START,
+  ALERT_MESSAGE,
+  LOADING_FINISH,
+  SUCCESS_FINISH,
 } from '../actions/actions';
 
 const initialState = {
@@ -30,7 +34,10 @@ const initialState = {
   offset: '',
   snapShotId: '',
   playlistUrl: '',
+  alertMessage: '',
+  variant: '',
   success: false,
+  active: false,
 };
 
 function reducer(state = initialState, action) {
@@ -65,7 +72,19 @@ function reducer(state = initialState, action) {
     case GET_PLAYLIST_URL:
       return { ...state, playlistUrl: action.payload };
     case SUCCESS_ALERT:
-      return { ...state, success: action.payload };
+      return { ...state, success: true };
+    case LOADING_START:
+      return { ...state, active: true };
+    case ALERT_MESSAGE:
+      return {
+        ...state,
+        alertMessage: action.payload.alertMessage,
+        variant: action.payload.variant,
+      };
+    case LOADING_FINISH:
+      return { ...state, active: false };
+    case SUCCESS_FINISH:
+      return { ...state, success: false };
     default:
       return state;
   }

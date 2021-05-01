@@ -12,18 +12,27 @@ export const HANDLE_SLIDER_VALUE = 'HANDLE_SLIDER_VALUE';
 export const RANDOMIZE_OFFSET = 'RANDOMIZE_OFFSET';
 export const GET_PLAYLIST_URL = 'GET_PLAYLIST_URL';
 export const SUCCESS_ALERT = 'SUCCESS_ALERT';
+export const LOADING_START = 'LOADING_START';
+export const ALERT_MESSAGE = 'ALERT_MESSAGE';
+export const LOADING_FINISH = 'LOADING_FINISH';
+export const SUCCESS_FINISH = 'SUCCESS_FINISH';
 
 // Step 1: Begin Authorization
 
 export const handleAuthURI = () => (dispatch) => {
+  dispatch({ type: SUCCESS_FINISH });
+  dispatch({
+    type: ALERT_MESSAGE,
+    payload: { alertMessage: 'One moment...', variant: 'warning' },
+  });
+  dispatch({ type: LOADING_START });
   return axios
     .get('/api/authorize')
     .then((res) => {
       dispatch({ type: GET_URI, payload: res.data });
-      console.log('1');
     })
     .catch((err) => {
-      console.log('Error occurred', err);
+      console.log('Please check your internet connection', err);
     });
 };
 
@@ -34,10 +43,12 @@ export const handleToken = () => (dispatch) => {
     .get('/api/token')
     .then((res) => {
       dispatch({ type: HANDLE_TOKEN, payload: res.data });
-      console.log('2');
     })
     .catch((err) => {
-      console.log(err);
+      console.log(
+        'Your token is invalid. Please re-authorize your session.',
+        err
+      );
     });
 };
 
@@ -48,7 +59,6 @@ export const handleUserInfo = () => (dispatch) => {
     .get('/api/me')
     .then((res) => {
       dispatch({ type: GET_USER_INFO, payload: res.data.id });
-      console.log('3');
     })
     .catch((err) => {
       console.log('Error occurred while retrieving profile information', err);
@@ -58,17 +68,22 @@ export const handleUserInfo = () => (dispatch) => {
 // Step 4: Save Form Values in State
 
 export const handleFormValues = (data) => (dispatch) => {
-  dispatch({ type: HANDLE_FORM_VALUES, payload: data });
-  console.log('4');
-  return data;
+  return dispatch({ type: HANDLE_FORM_VALUES, payload: data });
 };
 
 // Step 5: Save Slider Values in State
 
-export const handleSliderValue = (data) => (dispatch) => {
-  dispatch({ type: HANDLE_SLIDER_VALUE, payload: data });
-  console.log('5');
-  return data;
+export const handleSliderValue = (data) => (dispatch, getState) => {
+  let state = getState();
+  const playlistName = state.playlistName;
+  dispatch({
+    type: ALERT_MESSAGE,
+    payload: {
+      alertMessage: `Now loading "${playlistName}"... `,
+      variant: 'warning',
+    },
+  });
+  return dispatch({ type: HANDLE_SLIDER_VALUE, payload: data });
 };
 
 // Step 6: Create a New Playlist
@@ -92,7 +107,10 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
     )
     .then((res) => {
       dispatch({ type: CREATE_PLAYLIST, payload: res.data.id });
-      console.log('6');
+      dispatch({
+        type: GET_PLAYLIST_URL,
+        payload: res.data.external_urls.spotify,
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -105,18 +123,14 @@ export const randomizeQuery = (length) => (dispatch) => {
   var result = '';
   result =
     randomCharacters[Math.floor(Math.random() * randomCharacters.length)];
-  dispatch({ type: RANDOMIZE_QUERY, payload: result });
-  console.log('7');
-  return result;
+  return dispatch({ type: RANDOMIZE_QUERY, payload: result });
 };
 
 // Step 8: Retrieve offset
 export const randomizeOffset = () => (dispatch) => {
   var result = '';
   result = Math.floor(Math.random() * 500 + 1);
-  dispatch({ type: RANDOMIZE_OFFSET, payload: result });
-  console.log('8: The offset is: ', result);
-  return result;
+  return dispatch({ type: RANDOMIZE_OFFSET, payload: result });
 };
 
 // Step 9: Search for songs
@@ -136,10 +150,16 @@ export const handleSearch = () => (dispatch, getState) => {
     )
     .then((res) => {
       dispatch({ type: SEARCH_SONGS, payload: res.data.tracks.items });
-      console.log('9');
+      dispatch({
+        type: ALERT_MESSAGE,
+        payload: {
+          alertMessage: 'Retrieving your tunes...',
+          variant: 'warning',
+        },
+      });
     })
     .catch((err) => {
-      console.log('Err: ', err);
+      console.log('There was an error searching for tracks: ', err);
     });
 };
 
@@ -149,9 +169,7 @@ export const handleTrackUris = () => (dispatch, getState) => {
   let state = getState();
   const searchResults = state.searchResults;
   let uriList = [...new Set(searchResults.map((song) => song.uri))];
-  dispatch({ type: GET_TRACK_URIS, payload: uriList });
-  console.log('10');
-  return uriList;
+  return dispatch({ type: GET_TRACK_URIS, payload: uriList });
 };
 
 // Step 11: Add Songs to playlist
@@ -168,12 +186,20 @@ export const addToPlaylist = () => (dispatch, getState) => {
       { headers: { Authorization: 'Bearer' + ' ' + token } }
     )
     .then((res) => {
-      console.log(res);
-      dispatch({ type: GET_PLAYLIST_URL, payload: res.config.url });
-      dispatch({ type: SUCCESS_ALERT, payload: true });
-      return res.snapshot_id;
+      dispatch({
+        type: LOADING_FINISH,
+      });
+      dispatch({ type: SUCCESS_ALERT });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      dispatch({
+        type: ALERT_MESSAGE,
+        payload: {
+          alertMessage: `An error has occurred 😥. Please try again or widen your search criteria.`,
+          variant: 'danger',
+        },
+      });
+    });
 };
 
 // Step 11: Combine all action creators in sequential order
