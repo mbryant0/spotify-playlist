@@ -1,4 +1,4 @@
-export const randomCharacters = [
+const randomCharacters = [
   'a',
   'b',
   'c',
@@ -37,4 +37,4 @@ export const randomCharacters = [
   '0',
 ];
 
-export default { randomCharacters };
+export { randomCharacters };

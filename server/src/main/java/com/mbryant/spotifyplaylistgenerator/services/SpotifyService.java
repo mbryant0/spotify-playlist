@@ -4,13 +4,16 @@ import com.mbryant.spotifyplaylistgenerator.Constants;
 import com.mbryant.spotifyplaylistgenerator.models.AuthCredential;
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
+import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.model_objects.specification.User;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
+import org.apache.hc.core5.http.ParseException;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.net.URI;
 
 @Service
@@ -18,7 +21,8 @@ public class SpotifyService
 {
     //    Create the redirect URI for spotify API
     private final URI redirectUri = SpotifyHttpManager
-            .makeUri( "http://localhost:2025" + Constants.REDIRECT);
+            .makeUri( "http://localhost:3000" + Constants.REDIRECT);
+
 
     //    Create the spotifyAPI wrapper instance for future use
     private final SpotifyApi spotifyApi = new SpotifyApi.Builder()
@@ -41,6 +45,7 @@ public class SpotifyService
         return uri.toString();
     }
 
+
     public String getToken(){
         String token = spotifyApi.getAccessToken();
         return token;
@@ -51,6 +56,8 @@ public class SpotifyService
      * @param code String
      * @return AuthCredential
      */
+
+
     public AuthCredential exchangeForTokens(String code) {
         AuthorizationCodeRequest authorizationCodeRequest = spotifyApi.authorizationCode(code)
                 .build();

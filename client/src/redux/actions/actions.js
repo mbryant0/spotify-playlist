@@ -21,14 +21,13 @@ export const SUCCESS_FINISH = 'SUCCESS_FINISH';
 
 export const handleAuthURI = () => (dispatch) => {
   dispatch({ type: SUCCESS_FINISH });
-  dispatch({
-    type: ALERT_MESSAGE,
-    payload: { alertMessage: 'One moment...', variant: 'warning' },
-  });
+
   dispatch({ type: LOADING_START });
   return axios
     .get('/api/authorize')
     .then((res) => {
+      console.log(res);
+      localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
     })
     .catch((err) => {
@@ -42,7 +41,9 @@ export const handleToken = () => (dispatch) => {
   return axios
     .get('/api/token')
     .then((res) => {
-      dispatch({ type: HANDLE_TOKEN, payload: res.data });
+      console.log(res);
+      console.log('Setting Token...');
+      localStorage.setItem('token', res.data);
     })
     .catch((err) => {
       console.log(
@@ -58,6 +59,10 @@ export const handleUserInfo = () => (dispatch) => {
   return axios
     .get('/api/me')
     .then((res) => {
+      dispatch({
+        type: ALERT_MESSAGE,
+        payload: { alertMessage: 'One moment...', variant: 'warning' },
+      });
       dispatch({ type: GET_USER_INFO, payload: res.data.id });
     })
     .catch((err) => {
@@ -94,7 +99,6 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
   const playlistName = state.playlistName;
   const description = state.description;
   const privacy = state.privacy;
-  const token = state.token;
   return axios
     .post(
       `/spotifyapi/v1/users/${userId}/playlists`,
@@ -103,7 +107,7 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
         description: description,
         public: privacy.toString(),
       },
-      { headers: { Authorization: 'Bearer' + ' ' + token } }
+      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
     )
     .then((res) => {
       dispatch({ type: CREATE_PLAYLIST, payload: res.data.id });
@@ -142,12 +146,11 @@ export const handleSearch = () => (dispatch, getState) => {
   const genre = state.genre;
   const finalSliderValue = state.finalSliderValue;
   const numSongs = state.numSongs;
-  const token = state.token;
   const offset = state.offset;
   return axios
     .get(
       `/spotifyapi/v1/search?query=${query}*+genre%3A${genre}+year%3A+${finalSliderValue[0]}-${finalSliderValue[1]}&type=track&offset=${offset}&limit=${numSongs}`,
-      { headers: { Authorization: 'Bearer' + ' ' + token } }
+      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
     )
     .then((res) => {
       dispatch({ type: SEARCH_SONGS, payload: res.data.tracks.items });
@@ -158,6 +161,7 @@ export const handleSearch = () => (dispatch, getState) => {
           variant: 'warning',
         },
       });
+      console.log(res);
     })
     .catch((err) => {
       console.log('There was an error searching for tracks: ', err);
@@ -179,12 +183,11 @@ export const addToPlaylist = () => (dispatch, getState) => {
   let state = getState();
   const playlistId = state.playlistId;
   const trackUris = state.trackUris;
-  const token = state.token;
   return axios
     .post(
       `/spotifyapi/v1/playlists/${playlistId}/tracks`,
       { uris: trackUris },
-      { headers: { Authorization: 'Bearer' + ' ' + token } }
+      { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
     )
     .then((res) => {
       dispatch({
@@ -237,4 +240,15 @@ export const generatePlaylists = (data) => (dispatch) => {
     .then(() => {
       return dispatch(addToPlaylist());
     });
+};
+export const redirect = () => (dispatch, getState) => {
+  let state = getState();
+  const authUri = state.authUri;
+  return (window.location.href = authUri);
+};
+
+export const initialAuthorize = () => (dispatch) => {
+  dispatch(handleAuthURI()).then(() => {
+    return dispatch(redirect());
+  });
 };

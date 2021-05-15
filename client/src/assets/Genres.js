@@ -1,4 +1,4 @@
-export const genres = [
+const genres = [
   {
     text: 'Select a genre...',
     value: '',
@@ -94,4 +94,4 @@ export const genres = [
   { text: 'Kids', value: 'kids' },
 ];
 
-export default { genres };
+export { genres };

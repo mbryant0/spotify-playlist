@@ -19,7 +19,6 @@ import {
 
 const initialState = {
   authUri: '',
-  token: '',
   userId: '',
   playlistId: '',
   query: '',
