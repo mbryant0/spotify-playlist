@@ -111,7 +111,7 @@ const PlaylistForm = (props) => {
         <Container className='title'>
           <h1>Spotify Playlist Generator 🎧</h1>
         </Container>
-        {!localStorage.getItem('token') && (
+        {!localStorage.getItem('validated') && (
           <Container className='disclaimer'>
             <h2>
               In order to use this application, you must authorize your Spotify
@@ -120,12 +120,9 @@ const PlaylistForm = (props) => {
             <button onClick={handleInitialAuthorize}>
               I agree, authorize my account
             </button>
-            <Container className='authLink'>
-              <a>{authMessage}</a>
-            </Container>
           </Container>
         )}
-        {localStorage.getItem('token') && (
+        {localStorage.getItem('validated') && (
           <Container>
             <Form onSubmit={handleSubmit}>
               <Form.Row>

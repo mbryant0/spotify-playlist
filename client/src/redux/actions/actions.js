@@ -24,9 +24,9 @@ export const handleAuthURI = () => (dispatch) => {
   dispatch({ type: SUCCESS_FINISH });
 
   return axios
-    .get('/api/authorize')
+    .get('https://spotify-playlist-backend2021.herokuapp.com/authorize')
     .then((res) => {
-      //localStorage.setItem('validated', true);
+      localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
     })
     .catch((err) => {
@@ -40,7 +40,9 @@ export const handleToken = () => (dispatch, getState) => {
   let state = getState();
   const code = state.code;
   return axios
-    .get(`/api/getcredentials?code=${code}`)
+    .get(
+      `https://spotify-playlist-backend2021.herokuapp.com/getcredentials?code=${code}`
+    )
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
     })
@@ -51,7 +53,7 @@ export const handleToken = () => (dispatch, getState) => {
 
 export const handleUserInfo = () => (dispatch) => {
   return axios
-    .get('/api/me')
+    .get('https://spotify-playlist-backend2021.herokuapp.com/me')
     .then((res) => {
       dispatch({
         type: ALERT_MESSAGE,
@@ -96,7 +98,7 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
   const privacy = state.privacy;
   return axios
     .post(
-      `/spotifyapi/v1/users/${userId}/playlists`,
+      `https://api.spotify.com/v1/users/${userId}/playlists`,
       {
         name: playlistName,
         description: description,
@@ -144,7 +146,7 @@ export const handleSearch = () => (dispatch, getState) => {
   const offset = state.offset;
   return axios
     .get(
-      `/spotifyapi/v1/search?query=${query}*+genre%3A${genre}+year%3A+${finalSliderValue[0]}-${finalSliderValue[1]}&type=track&offset=${offset}&limit=${numSongs}`,
+      `https://api.spotify.com/v1/search?query=${query}*+genre%3A${genre}+year%3A+${finalSliderValue[0]}-${finalSliderValue[1]}&type=track&offset=${offset}&limit=${numSongs}`,
       { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
     )
     .then((res) => {
@@ -180,7 +182,7 @@ export const addToPlaylist = () => (dispatch, getState) => {
   const trackUris = state.trackUris;
   return axios
     .post(
-      `/spotifyapi/v1/playlists/${playlistId}/tracks`,
+      `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
       { uris: trackUris },
       { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
     )
@@ -250,7 +252,9 @@ export const retrieveCodeFromURL = () => (dispatch) => {
 };
 
 export const initialAuthorize = () => (dispatch) => {
-  dispatch(handleAuthURI());
+  dispatch(handleAuthURI()).then(() => {
+    return dispatch(redirect());
+  });
 };
 
 export const getToken = () => (dispatch) => {
