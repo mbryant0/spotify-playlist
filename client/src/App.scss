@@ -39,8 +39,6 @@
 
 .homepage-container {
   margin-top: 5%;
-  border: 2px solid $gray-600;
-  border-radius: 5%;
   padding: 2%;
   background-color: #fff;
 }
@@ -91,10 +89,10 @@ body {
   text-align: center;
   margin: 2%;
   h2 {
-    font-size: 1.8;
+    font-size: 1.8rem;
   }
   button {
-    font-size: 1.2;
+    font-size: 1.2rem;
     padding: 15px;
     margin: 2%;
   }
@@ -104,4 +102,57 @@ body {
   cursor: pointer;
   color: blue;
   text-decoration: underline;
+}
+
+.desktop {
+  display: flex;
+}
+.mobile {
+  display: none;
+}
+
+.mobile-small {
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+  .title {
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: flex;
+  }
+
+  label.form-label {
+    font-size: 1.2rem;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .mobile {
+    display: none;
+  }
+
+  .mobile-small {
+    display: flex;
+  }
+
+  .title {
+    h1 {
+      font-size: 1.5rem;
+      margin: 3%;
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .homepage-container {
+    margin: 0;
+  }
 }

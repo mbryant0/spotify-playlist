@@ -125,8 +125,51 @@ const PlaylistForm = (props) => {
         {localStorage.getItem('validated') && (
           <Container>
             <Form onSubmit={handleSubmit}>
-              <Form.Row>
+              <Form.Row className='desktop'>
                 <Col xs={7}>
+                  <Form.Group>
+                    <Form.Label>PLAYLIST NAME</Form.Label>
+                    <Form.Control
+                      size='lg'
+                      type='text'
+                      placeholder='"My Awesome New Playlist"'
+                      name='playlistName'
+                      value={formValues.playlistName}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={2}>
+                  <Form.Group>
+                    <Form.Label>NUMBER OF SONGS</Form.Label>
+                    <Form.Control
+                      name='numSongs'
+                      value={formValues.numSongs}
+                      onChange={handleChange}
+                      type='number'
+                      min={5}
+                      max={50}
+                      size='lg'
+                    />
+                  </Form.Group>
+                </Col>
+                <Col xs={2}>
+                  <Form.Group>
+                    <Form.Label>
+                      PLAYLIST PUBLIC? (Turn ON for Public)
+                    </Form.Label>
+                    <Form.Check
+                      name='privacy'
+                      checked={formValues.privacy}
+                      onChange={handleChange}
+                      type='switch'
+                      id='custom-switch'
+                    />
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <Form.Row className='mobile'>
+                <Col xs={6}>
                   <Form.Group>
                     <Form.Label>PLAYLIST NAME</Form.Label>
                     <Form.Control
@@ -154,6 +197,51 @@ const PlaylistForm = (props) => {
                   </Form.Group>
                 </Col>
                 <Col xs={2}>
+                  <Form.Group>
+                    <Form.Label>
+                      PLAYLIST PUBLIC? (Turn ON for Public)
+                    </Form.Label>
+                    <Form.Check
+                      name='privacy'
+                      checked={formValues.privacy}
+                      onChange={handleChange}
+                      type='switch'
+                      id='custom-switch'
+                    />
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <Form.Row className='mobile-small'>
+                <Col>
+                  <Form.Group>
+                    <Form.Label>PLAYLIST NAME</Form.Label>
+                    <Form.Control
+                      size='lg'
+                      type='text'
+                      placeholder='"My Awesome New Playlist"'
+                      name='playlistName'
+                      value={formValues.playlistName}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                </Col>
+              </Form.Row>
+              <Form.Row className='mobile-small'>
+                <Col xs={5}>
+                  <Form.Group>
+                    <Form.Label>NUMBER OF SONGS</Form.Label>
+                    <Form.Control
+                      name='numSongs'
+                      value={formValues.numSongs}
+                      onChange={handleChange}
+                      type='number'
+                      min={5}
+                      max={50}
+                      size='lg'
+                    />
+                  </Form.Group>
+                </Col>
+                <Col>
                   <Form.Group>
                     <Form.Label>
                       PLAYLIST PUBLIC? (Turn ON for Public)
