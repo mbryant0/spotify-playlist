@@ -39,12 +39,13 @@ const initialState = {
   success: false,
   active: false,
   code: '',
+  authMessage: '',
 };
 
 function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_URI:
-      return { ...state, authUri: action.payload };
+      return { ...state, authUri: action.payload, authMessage: action.payload };
     case HANDLE_TOKEN:
       return { ...state, token: action.payload };
     case GET_USER_INFO:

@@ -26,7 +26,7 @@ export const handleAuthURI = () => (dispatch) => {
   return axios
     .get('/api/authorize')
     .then((res) => {
-      localStorage.setItem('validated', true);
+      //localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
     })
     .catch((err) => {
@@ -250,9 +250,7 @@ export const retrieveCodeFromURL = () => (dispatch) => {
 };
 
 export const initialAuthorize = () => (dispatch) => {
-  dispatch(handleAuthURI()).then(() => {
-    return dispatch(redirect());
-  });
+  dispatch(handleAuthURI());
 };
 
 export const getToken = () => (dispatch) => {

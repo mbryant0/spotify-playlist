@@ -18,6 +18,7 @@ import * as yup from 'yup';
 
 const PlaylistForm = (props) => {
   const {
+    authUri,
     generatePlaylists,
     playlistUrl,
     success,
@@ -27,6 +28,7 @@ const PlaylistForm = (props) => {
     initialAuthorize,
     handleToken,
     retrieveCodeFromURL,
+    authMessage,
   } = props;
 
   // Setting Initial State Values
@@ -99,9 +101,8 @@ const PlaylistForm = (props) => {
     initialAuthorize();
   };
   useEffect(() => {
-    //retrieveCodeFromURL()
-    //  handleToken();
-    getToken();
+    retrieveCodeFromURL();
+    handleToken();
   }, []);
 
   return (
@@ -110,7 +111,7 @@ const PlaylistForm = (props) => {
         <Container className='title'>
           <h1>Spotify Playlist Generator 🎧</h1>
         </Container>
-        {!localStorage.getItem('validated') && (
+        {!localStorage.getItem('token') && (
           <Container className='disclaimer'>
             <h2>
               In order to use this application, you must authorize your Spotify
@@ -119,9 +120,12 @@ const PlaylistForm = (props) => {
             <button onClick={handleInitialAuthorize}>
               I agree, authorize my account
             </button>
+            <Container className='authLink'>
+              <a>{authMessage}</a>
+            </Container>
           </Container>
         )}
-        {localStorage.getItem('validated') && (
+        {localStorage.getItem('token') && (
           <Container>
             <Form onSubmit={handleSubmit}>
               <Form.Row>
@@ -256,6 +260,7 @@ const mapStateToProps = (state) => {
     alertMessage: state.alertMessage,
     variant: state.variant,
     token: state.token,
+    authMessage: state.authMessage,
   };
 };
 
