@@ -136,6 +136,7 @@ const PlaylistForm = (props) => {
                       name='playlistName'
                       value={formValues.playlistName}
                       onChange={handleChange}
+                      autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
@@ -150,6 +151,7 @@ const PlaylistForm = (props) => {
                       min={5}
                       max={50}
                       size='lg'
+                      autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
@@ -179,6 +181,7 @@ const PlaylistForm = (props) => {
                       name='playlistName'
                       value={formValues.playlistName}
                       onChange={handleChange}
+                      autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
@@ -193,6 +196,7 @@ const PlaylistForm = (props) => {
                       min={5}
                       max={50}
                       size='lg'
+                      autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
@@ -222,6 +226,7 @@ const PlaylistForm = (props) => {
                       name='playlistName'
                       value={formValues.playlistName}
                       onChange={handleChange}
+                      autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
@@ -238,6 +243,7 @@ const PlaylistForm = (props) => {
                       min={5}
                       max={50}
                       size='lg'
+                      autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
@@ -267,6 +273,7 @@ const PlaylistForm = (props) => {
                       rows={3}
                       as='textarea'
                       maxLength='250'
+                      autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
