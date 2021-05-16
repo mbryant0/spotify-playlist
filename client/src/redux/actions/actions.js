@@ -23,11 +23,9 @@ export const ACCESS_CODE_SUCCESS = 'ACCESS_CODE_SUCCESS';
 export const handleAuthURI = () => (dispatch) => {
   dispatch({ type: SUCCESS_FINISH });
 
-  dispatch({ type: LOADING_START });
   return axios
     .get('/api/authorize')
     .then((res) => {
-      console.log(res);
       localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
     })
@@ -44,16 +42,9 @@ export const handleToken = () => (dispatch, getState) => {
   return axios
     .get(`/api/getcredentials?code=${code}`)
     .then((res) => {
-      console.log(res.data.accessToken);
-      console.log('Setting Token...');
       localStorage.setItem('token', res.data.accessToken);
     })
-    .catch((err) => {
-      console.log(
-        'Your token is invalid. Please re-authorize your session.',
-        err
-      );
-    });
+    .catch((err) => {});
 };
 
 // Step 3: Save User Info in State
@@ -67,6 +58,7 @@ export const handleUserInfo = () => (dispatch) => {
         payload: { alertMessage: 'One moment...', variant: 'warning' },
       });
       dispatch({ type: GET_USER_INFO, payload: res.data.id });
+      dispatch({ type: LOADING_START });
     })
     .catch((err) => {
       console.log('Error occurred while retrieving profile information', err);
@@ -206,6 +198,8 @@ export const addToPlaylist = () => (dispatch, getState) => {
           variant: 'danger',
         },
       });
+      localStorage.removeItem('token');
+      localStorage.removeItem('validated');
     });
 };
 
@@ -250,7 +244,6 @@ export const redirect = () => (dispatch, getState) => {
   return (window.location.href = authUri);
 };
 export const retrieveCodeFromURL = () => (dispatch) => {
-  console.log(window.location.href);
   const url = new URL(window.location.href);
   const code = url.searchParams.get('code');
   dispatch({ type: ACCESS_CODE_SUCCESS, payload: code });
@@ -259,5 +252,11 @@ export const retrieveCodeFromURL = () => (dispatch) => {
 export const initialAuthorize = () => (dispatch) => {
   dispatch(handleAuthURI()).then(() => {
     return dispatch(redirect());
+  });
+};
+
+export const getToken = () => (dispatch) => {
+  dispatch(retrieveCodeFromURL()).then(() => {
+    return dispatch(handleToken());
   });
 };

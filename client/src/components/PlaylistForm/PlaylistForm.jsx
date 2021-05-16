@@ -12,9 +12,9 @@ import {
   initialAuthorize,
   handleToken,
   retrieveCodeFromURL,
+  getToken,
 } from '../../redux/actions/actions';
 import * as yup from 'yup';
-import axios from 'axios';
 
 const PlaylistForm = (props) => {
   const {
@@ -63,7 +63,6 @@ const PlaylistForm = (props) => {
       .reach(schema, name)
       .validate(value)
       .then(() => {
-        console.log(errorMessages);
         setErrorMessages({ ...errorMessages, [name]: '' });
       })
       .catch((err) => {
@@ -100,9 +99,9 @@ const PlaylistForm = (props) => {
     initialAuthorize();
   };
   useEffect(() => {
-    retrieveCodeFromURL();
-    handleToken();
-    console.log('GOT YOUR CODE');
+    //retrieveCodeFromURL()
+    //  handleToken();
+    getToken();
   }, []);
 
   return (
@@ -222,14 +221,6 @@ const PlaylistForm = (props) => {
                     <Button disabled={disabled} type='submit'>
                       Generate Playlist
                     </Button>
-                    <Button
-                      onClick={() => {
-                        localStorage.removeItem('validated');
-                        localStorage.removeItem('token');
-                      }}
-                    >
-                      Revoke Access
-                    </Button>
                   </Form.Group>
                 </Col>
               </Form.Row>
@@ -273,4 +264,5 @@ export default connect(mapStateToProps, {
   initialAuthorize,
   handleToken,
   retrieveCodeFromURL,
+  getToken,
 })(PlaylistForm);
