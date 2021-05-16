@@ -15,6 +15,7 @@ import {
   ALERT_MESSAGE,
   LOADING_FINISH,
   SUCCESS_FINISH,
+  ACCESS_CODE_SUCCESS,
 } from '../actions/actions';
 
 const initialState = {
@@ -37,6 +38,7 @@ const initialState = {
   variant: '',
   success: false,
   active: false,
+  code: '',
 };
 
 function reducer(state = initialState, action) {
@@ -84,6 +86,8 @@ function reducer(state = initialState, action) {
       return { ...state, active: false };
     case SUCCESS_FINISH:
       return { ...state, success: false };
+    case ACCESS_CODE_SUCCESS:
+      return { ...state, code: action.payload };
     default:
       return state;
   }

@@ -16,6 +16,7 @@ export const LOADING_START = 'LOADING_START';
 export const ALERT_MESSAGE = 'ALERT_MESSAGE';
 export const LOADING_FINISH = 'LOADING_FINISH';
 export const SUCCESS_FINISH = 'SUCCESS_FINISH';
+export const ACCESS_CODE_SUCCESS = 'ACCESS_CODE_SUCCESS';
 
 // Step 1: Begin Authorization
 
@@ -37,13 +38,15 @@ export const handleAuthURI = () => (dispatch) => {
 
 // Step 2: Save Token in State
 
-export const handleToken = () => (dispatch) => {
+export const handleToken = () => (dispatch, getState) => {
+  let state = getState();
+  const code = state.code;
   return axios
-    .get('/api/token')
+    .get(`/api/getcredentials?code=${code}`)
     .then((res) => {
-      console.log(res);
+      console.log(res.data.accessToken);
       console.log('Setting Token...');
-      localStorage.setItem('token', res.data);
+      localStorage.setItem('token', res.data.accessToken);
     })
     .catch((err) => {
       console.log(
@@ -245,6 +248,12 @@ export const redirect = () => (dispatch, getState) => {
   let state = getState();
   const authUri = state.authUri;
   return (window.location.href = authUri);
+};
+export const retrieveCodeFromURL = () => (dispatch) => {
+  console.log(window.location.href);
+  const url = new URL(window.location.href);
+  const code = url.searchParams.get('code');
+  dispatch({ type: ACCESS_CODE_SUCCESS, payload: code });
 };
 
 export const initialAuthorize = () => (dispatch) => {

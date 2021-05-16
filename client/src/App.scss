@@ -85,3 +85,17 @@ body {
     align-self: center;
   }
 }
+
+.disclaimer {
+  align-self: center;
+  text-align: center;
+  margin: 2%;
+  h2 {
+    font-size: 1.8;
+  }
+  button {
+    font-size: 1.2;
+    padding: 15px;
+    margin: 2%;
+  }
+}

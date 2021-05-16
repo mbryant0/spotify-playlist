@@ -11,8 +11,10 @@ import {
   generatePlaylists,
   initialAuthorize,
   handleToken,
+  retrieveCodeFromURL,
 } from '../../redux/actions/actions';
 import * as yup from 'yup';
+import axios from 'axios';
 
 const PlaylistForm = (props) => {
   const {
@@ -24,6 +26,7 @@ const PlaylistForm = (props) => {
     variant,
     initialAuthorize,
     handleToken,
+    retrieveCodeFromURL,
   } = props;
 
   // Setting Initial State Values
@@ -60,10 +63,11 @@ const PlaylistForm = (props) => {
       .reach(schema, name)
       .validate(value)
       .then(() => {
+        console.log(errorMessages);
         setErrorMessages({ ...errorMessages, [name]: '' });
       })
       .catch((err) => {
-        setErrorMessages({ ...errorMessages, [name]: err.errorMessages[0] });
+        setErrorMessages({ ...errorMessages, [name]: 'Error' });
       });
   };
 
@@ -96,8 +100,11 @@ const PlaylistForm = (props) => {
     initialAuthorize();
   };
   useEffect(() => {
+    retrieveCodeFromURL();
     handleToken();
+    console.log('GOT YOUR CODE');
   }, []);
+
   return (
     <>
       <Container className='homepage-container'>
@@ -105,7 +112,7 @@ const PlaylistForm = (props) => {
           <h1>Spotify Playlist Generator 🎧</h1>
         </Container>
         {!localStorage.getItem('validated') && (
-          <Container>
+          <Container className='disclaimer'>
             <h2>
               In order to use this application, you must authorize your Spotify
               account.
@@ -265,4 +272,5 @@ export default connect(mapStateToProps, {
   generatePlaylists,
   initialAuthorize,
   handleToken,
+  retrieveCodeFromURL,
 })(PlaylistForm);
