@@ -6,6 +6,7 @@ and year range.
 ## Project Screenshots
 
 ![Project screenshot 1](./client/src/assets/ProjectScreenshot1.png)
+![Project screenshot 2](./client/src/assets/ProjectScreenshot2.png)
 
 ## Installation and Setup Instructions
 
