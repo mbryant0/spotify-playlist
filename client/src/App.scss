@@ -132,6 +132,16 @@ body {
   label.form-label {
     font-size: 1.2rem;
   }
+
+  .disclaimer {
+    h2 {
+      font-size: 1.5rem;
+    }
+    button {
+      font-size: 1.1rem;
+      padding: 10px;
+    }
+  }
 }
 
 @media screen and (max-width: 900px) {
@@ -149,6 +159,16 @@ body {
       margin: 3%;
     }
   }
+
+  .disclaimer {
+    h2 {
+      font-size: 1.3rem;
+    }
+    button {
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }
 }
 
 @media screen and (max-width: 575px) {
@@ -157,5 +177,9 @@ body {
   }
   body {
     background: white;
+  }
+
+  label.form-label {
+    font-size: 1rem;
   }
 }
