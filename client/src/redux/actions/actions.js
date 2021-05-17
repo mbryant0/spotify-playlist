@@ -190,7 +190,6 @@ export const handleSearch = () => (dispatch, getState) => {
           variant: 'warning',
         },
       });
-      console.log(res);
     })
     .catch((err) => {
       console.log('There was an error searching for tracks: ', err);
