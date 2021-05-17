@@ -101,11 +101,13 @@ body {
 .desktop {
   display: flex;
 }
-.mobile {
+.col-6 {
   display: none;
+  width: 0;
+  height: 0;
 }
 
-.mobile-small {
+.mobile {
   display: none;
 }
 
@@ -114,13 +116,6 @@ body {
     h1 {
       font-size: 1.8rem;
     }
-  }
-  .desktop {
-    display: none;
-  }
-
-  .mobile {
-    display: flex;
   }
 
   label.form-label {
@@ -138,12 +133,12 @@ body {
   }
 }
 
-@media screen and (max-width: 900px) {
-  .mobile {
+@media screen and (max-width: 1000px) {
+  .desktop {
     display: none;
   }
 
-  .mobile-small {
+  .mobile {
     display: flex;
   }
 

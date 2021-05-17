@@ -40,6 +40,7 @@ const initialState = {
   active: false,
   code: '',
   authMessage: '',
+  promiseError: false,
 };
 
 function reducer(state = initialState, action) {

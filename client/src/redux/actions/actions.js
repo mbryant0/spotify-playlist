@@ -18,6 +18,8 @@ export const LOADING_FINISH = 'LOADING_FINISH';
 export const SUCCESS_FINISH = 'SUCCESS_FINISH';
 export const ACCESS_CODE_SUCCESS = 'ACCESS_CODE_SUCCESS';
 
+//https://spotify-playlist-backend2021.herokuapp.com
+
 // Step 1: Begin Authorization
 
 export const handleAuthURI = () => (dispatch) => {
@@ -34,7 +36,30 @@ export const handleAuthURI = () => (dispatch) => {
     });
 };
 
-// Step 2: Save Token in State
+// Step 2: Redirect User to Authorization URI
+
+export const redirect = () => (dispatch, getState) => {
+  let state = getState();
+  const authUri = state.authUri;
+  return (window.location.href = authUri);
+};
+
+// Step 3: Combine Steps 1 and 2 into a single action creator
+export const initialAuthorize = () => (dispatch) => {
+  dispatch(handleAuthURI()).then(() => {
+    return dispatch(redirect());
+  });
+};
+
+// Step 4: Parse Auth Code from URL
+
+export const retrieveCodeFromURL = () => (dispatch) => {
+  const url = new URL(window.location.href);
+  const code = url.searchParams.get('code');
+  dispatch({ type: ACCESS_CODE_SUCCESS, payload: code });
+};
+
+// Step 5: Save Token in State
 
 export const handleToken = () => (dispatch, getState) => {
   let state = getState();
@@ -49,7 +74,14 @@ export const handleToken = () => (dispatch, getState) => {
     .catch((err) => {});
 };
 
-// Step 3: Save User Info in State
+// Step 6: Combine Steps 3 and 4 into a single action creator
+export const getToken = () => (dispatch) => {
+  dispatch(retrieveCodeFromURL()).then(() => {
+    return dispatch(handleToken());
+  });
+};
+
+// Step 7: Save User Id in State
 
 export const handleUserInfo = () => (dispatch) => {
   return axios
@@ -67,13 +99,13 @@ export const handleUserInfo = () => (dispatch) => {
     });
 };
 
-// Step 4: Save Form Values in State
+// Step 8: Save Form Values in Global Application State
 
 export const handleFormValues = (data) => (dispatch) => {
   return dispatch({ type: HANDLE_FORM_VALUES, payload: data });
 };
 
-// Step 5: Save Slider Values in State
+// Step 9: Save Slider Values in Global Application State
 
 export const handleSliderValue = (data) => (dispatch, getState) => {
   let state = getState();
@@ -88,7 +120,7 @@ export const handleSliderValue = (data) => (dispatch, getState) => {
   return dispatch({ type: HANDLE_SLIDER_VALUE, payload: data });
 };
 
-// Step 6: Create a New Playlist
+// Step 10: Create a New Playlist
 
 export const handlePlaylistCreation = () => (dispatch, getState) => {
   let state = getState();
@@ -118,7 +150,7 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
     });
 };
 
-// Step 7: Retrieve Query Seed
+// Step 11: Retrieve Query Seed
 
 export const randomizeQuery = (length) => (dispatch) => {
   var result = '';
@@ -127,7 +159,7 @@ export const randomizeQuery = (length) => (dispatch) => {
   return dispatch({ type: RANDOMIZE_QUERY, payload: result });
 };
 
-// Step 8: Retrieve offset
+// Step 12: Retrieve offset
 
 export const randomizeOffset = () => (dispatch) => {
   var result = '';
@@ -135,7 +167,7 @@ export const randomizeOffset = () => (dispatch) => {
   return dispatch({ type: RANDOMIZE_OFFSET, payload: result });
 };
 
-// Step 9: Search for songs
+// Step 13: Search for songs
 
 export const handleSearch = () => (dispatch, getState) => {
   let state = getState();
@@ -165,7 +197,7 @@ export const handleSearch = () => (dispatch, getState) => {
     });
 };
 
-// Step 10: Retrieve Track URIs from Search Results
+// Step 14: Retrieve Track URIs from Search Results
 
 export const handleTrackUris = () => (dispatch, getState) => {
   let state = getState();
@@ -174,7 +206,7 @@ export const handleTrackUris = () => (dispatch, getState) => {
   return dispatch({ type: GET_TRACK_URIS, payload: uriList });
 };
 
-// Step 11: Add Songs to playlist
+// Step 15: Add Songs to playlist
 
 export const addToPlaylist = () => (dispatch, getState) => {
   let state = getState();
@@ -196,7 +228,7 @@ export const addToPlaylist = () => (dispatch, getState) => {
       dispatch({
         type: ALERT_MESSAGE,
         payload: {
-          alertMessage: `An error has occurred 😥. Please try again or widen your search criteria.`,
+          alertMessage: `An error has occurred 😥. Please refresh and try again.`,
           variant: 'danger',
         },
       });
@@ -205,7 +237,7 @@ export const addToPlaylist = () => (dispatch, getState) => {
     });
 };
 
-// Step 11: Combine all action creators in sequential order
+// Step 16: Combine all action creators in sequential order
 
 export const generatePlaylists = (data) => (dispatch) => {
   dispatch(handleAuthURI())
@@ -239,26 +271,4 @@ export const generatePlaylists = (data) => (dispatch) => {
     .then(() => {
       return dispatch(addToPlaylist());
     });
-};
-export const redirect = () => (dispatch, getState) => {
-  let state = getState();
-  const authUri = state.authUri;
-  return (window.location.href = authUri);
-};
-export const retrieveCodeFromURL = () => (dispatch) => {
-  const url = new URL(window.location.href);
-  const code = url.searchParams.get('code');
-  dispatch({ type: ACCESS_CODE_SUCCESS, payload: code });
-};
-
-export const initialAuthorize = () => (dispatch) => {
-  dispatch(handleAuthURI()).then(() => {
-    return dispatch(redirect());
-  });
-};
-
-export const getToken = () => (dispatch) => {
-  dispatch(retrieveCodeFromURL()).then(() => {
-    return dispatch(handleToken());
-  });
 };

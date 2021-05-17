@@ -24,4 +24,4 @@ npm start
 ## Upcoming Features
 
 [ ] Add the green color to list of Bootstrap theme colors for reusability [ ]
-Receive code review [ ] Create a demo video
+Receive code review

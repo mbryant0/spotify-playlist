@@ -15,10 +15,10 @@ import {
   getToken,
 } from '../../redux/actions/actions';
 import * as yup from 'yup';
+import MobilePlaylistForm from '../MobilePlaylistForm/MobilePlaylistForm';
 
 const PlaylistForm = (props) => {
   const {
-    authUri,
     generatePlaylists,
     playlistUrl,
     success,
@@ -28,7 +28,6 @@ const PlaylistForm = (props) => {
     initialAuthorize,
     handleToken,
     retrieveCodeFromURL,
-    authMessage,
   } = props;
 
   // Setting Initial State Values
@@ -52,7 +51,7 @@ const PlaylistForm = (props) => {
     numSongs: yup.string().required('Number of songs is required.'),
   });
 
-  // Setting Error Messages Depending if User Input Matches Schema
+  // Setting Error Messages Depending On If User Input Matches Schema
 
   const [errorMessages, setErrorMessages] = useState({
     playlistName: '',
@@ -71,6 +70,20 @@ const PlaylistForm = (props) => {
         setErrorMessages({ ...errorMessages, [name]: 'Error' });
       });
   };
+
+  // Retrieve Authorization URI from Spotify API and redirect
+
+  const handleInitialAuthorize = (e) => {
+    e.preventDefault();
+    initialAuthorize();
+  };
+
+  // On initial render after redirect, parse auth code from URL and exchange for token
+
+  useEffect(() => {
+    retrieveCodeFromURL();
+    handleToken();
+  }, []);
 
   // Updating State W/ User Input
 
@@ -95,15 +108,6 @@ const PlaylistForm = (props) => {
   useEffect(() => {
     schema.isValid(formValues).then((valid) => setDisabled(!valid));
   }, [formValues]);
-
-  const handleInitialAuthorize = (e) => {
-    e.preventDefault();
-    initialAuthorize();
-  };
-  useEffect(() => {
-    retrieveCodeFromURL();
-    handleToken();
-  }, []);
 
   return (
     <>
@@ -155,98 +159,6 @@ const PlaylistForm = (props) => {
                     />
                   </Form.Group>
                 </Col>
-                <Col xs={2}>
-                  <Form.Group>
-                    <Form.Label>
-                      PLAYLIST PUBLIC? (Turn ON for Public)
-                    </Form.Label>
-                    <Form.Check
-                      name='privacy'
-                      checked={formValues.privacy}
-                      onChange={handleChange}
-                      type='switch'
-                      id='custom-switch'
-                    />
-                  </Form.Group>
-                </Col>
-              </Form.Row>
-              <Form.Row className='mobile'>
-                <Col xs={6}>
-                  <Form.Group>
-                    <Form.Label>PLAYLIST NAME</Form.Label>
-                    <Form.Control
-                      size='lg'
-                      type='text'
-                      placeholder='"My Awesome New Playlist"'
-                      name='playlistName'
-                      value={formValues.playlistName}
-                      onChange={handleChange}
-                      autoComplete='off'
-                    />
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>NUMBER OF SONGS</Form.Label>
-                    <Form.Control
-                      name='numSongs'
-                      value={formValues.numSongs}
-                      onChange={handleChange}
-                      type='number'
-                      min={5}
-                      max={50}
-                      size='lg'
-                      autoComplete='off'
-                    />
-                  </Form.Group>
-                </Col>
-                <Col xs={2}>
-                  <Form.Group>
-                    <Form.Label>
-                      PLAYLIST PUBLIC? (Turn ON for Public)
-                    </Form.Label>
-                    <Form.Check
-                      name='privacy'
-                      checked={formValues.privacy}
-                      onChange={handleChange}
-                      type='switch'
-                      id='custom-switch'
-                    />
-                  </Form.Group>
-                </Col>
-              </Form.Row>
-              <Form.Row className='mobile-small'>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>PLAYLIST NAME</Form.Label>
-                    <Form.Control
-                      size='lg'
-                      type='text'
-                      placeholder='"My Awesome New Playlist"'
-                      name='playlistName'
-                      value={formValues.playlistName}
-                      onChange={handleChange}
-                      autoComplete='off'
-                    />
-                  </Form.Group>
-                </Col>
-              </Form.Row>
-              <Form.Row className='mobile-small'>
-                <Col xs={5}>
-                  <Form.Group>
-                    <Form.Label>NUMBER OF SONGS</Form.Label>
-                    <Form.Control
-                      name='numSongs'
-                      value={formValues.numSongs}
-                      onChange={handleChange}
-                      type='number'
-                      min={5}
-                      max={50}
-                      size='lg'
-                      autoComplete='off'
-                    />
-                  </Form.Group>
-                </Col>
                 <Col>
                   <Form.Group>
                     <Form.Label>
@@ -262,6 +174,7 @@ const PlaylistForm = (props) => {
                   </Form.Group>
                 </Col>
               </Form.Row>
+              <MobilePlaylistForm />
               <Form.Row>
                 <Col>
                   <Form.Group>
