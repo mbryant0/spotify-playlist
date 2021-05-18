@@ -122,6 +122,10 @@ body {
     font-size: 1.2rem;
   }
 
+  .form-control-lg {
+    font-size: 1.1rem;
+  }
+
   .disclaimer {
     h2 {
       font-size: 1.5rem;
@@ -140,6 +144,10 @@ body {
 
   .mobile {
     display: flex;
+  }
+
+  body {
+    background: white;
   }
 
   .title {
@@ -164,11 +172,11 @@ body {
   .homepage-container {
     margin: 0;
   }
-  body {
-    background: white;
-  }
 
   label.form-label {
     font-size: 1rem;
+  }
+  .form-control-lg {
+    font-size: 0.9rem;
   }
 }

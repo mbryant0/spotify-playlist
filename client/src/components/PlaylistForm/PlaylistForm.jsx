@@ -129,7 +129,7 @@ const PlaylistForm = (props) => {
           <Container>
             <Form onSubmit={handleSubmit}>
               <Form.Row className='desktop'>
-                <Col xs={7}>
+                <Col xs={8}>
                   <Form.Group>
                     <Form.Label>PLAYLIST NAME</Form.Label>
                     <Form.Control
@@ -160,9 +160,7 @@ const PlaylistForm = (props) => {
                 </Col>
                 <Col>
                   <Form.Group>
-                    <Form.Label>
-                      PLAYLIST PUBLIC? (Turn ON for Public)
-                    </Form.Label>
+                    <Form.Label>PRIVATE/PUBLIC</Form.Label>
                     <Form.Check
                       name='privacy'
                       checked={formValues.privacy}
@@ -176,7 +174,7 @@ const PlaylistForm = (props) => {
               <Form.Row className='mobile'>
                 <Col>
                   <Form.Group>
-                    <Form.Label>PLAYLIST NAME</Form.Label>
+                    <Form.Label>NAME</Form.Label>
                     <Form.Control
                       size='lg'
                       type='text'
@@ -207,9 +205,7 @@ const PlaylistForm = (props) => {
                 </Col>
                 <Col>
                   <Form.Group>
-                    <Form.Label>
-                      PLAYLIST PUBLIC? (Turn ON for Public)
-                    </Form.Label>
+                    <Form.Label>PRIVATE/PUBLIC</Form.Label>
                     <Form.Check
                       name='privacy'
                       checked={formValues.privacy}
@@ -223,7 +219,7 @@ const PlaylistForm = (props) => {
               <Form.Row>
                 <Col>
                   <Form.Group>
-                    <Form.Label>PLAYLIST DESCRIPTION</Form.Label>
+                    <Form.Label>DESCRIPTION</Form.Label>
                     <Form.Control
                       name='description'
                       value={formValues.description}
