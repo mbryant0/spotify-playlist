@@ -17,7 +17,8 @@ import {
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
-import useYupValidation from '../../UseYupValidation';
+import useYupValidation from '../../hooks/useYupValidation';
+import useSlider from '../../hooks/useSlider';
 
 const PlaylistForm = (props) => {
   const {
@@ -37,17 +38,14 @@ const PlaylistForm = (props) => {
     resolver: resolver,
     mode: 'onChange',
   });
-
-  const [sliderValue, setSliderValue] = useState([1970, 2000]);
+  const { value: sliderValue, bind: bindSliderValues } = useSlider([
+    1970, 2000,
+  ]);
 
   useEffect(() => {
     retrieveCodeFromURL();
     handleToken();
-  });
-
-  const handleSliderChange = (event, newValue) => {
-    setSliderValue(newValue);
-  };
+  }, []);
 
   const onSubmit = (data) => {
     generatePlaylists({ formValues: data, sliderValue: sliderValue });
@@ -135,7 +133,7 @@ const PlaylistForm = (props) => {
                     max={2021}
                     name='year'
                     value={sliderValue}
-                    onChange={handleSliderChange}
+                    {...bindSliderValues}
                     aria-labelledby='range-slider'
                   />
                 </Col>
@@ -187,7 +185,6 @@ const PlaylistForm = (props) => {
 const mapStateToProps = (state) => {
   return {
     authUri: state.authUri,
-    query: state.query,
     success: state.success,
     playlistUrl: state.playlistUrl,
     active: state.active,
@@ -195,7 +192,6 @@ const mapStateToProps = (state) => {
     alertMessage: state.alertMessage,
     variant: state.variant,
     token: state.token,
-    authMessage: state.authMessage,
   };
 };
 
