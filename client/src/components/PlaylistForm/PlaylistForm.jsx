@@ -6,15 +6,18 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import { genres } from '../../assets/Genres';
+import { schema } from '../../assets/playlistSchema';
 import { connect } from 'react-redux';
 import {
   generatePlaylists,
-  initialAuthorize,
   handleToken,
   retrieveCodeFromURL,
   getToken,
+  handleInitialAuthorize,
 } from '../../redux/actions/actions';
-import * as yup from 'yup';
+
+import { useForm } from 'react-hook-form';
+import useYupValidation from '../../UseYupValidation';
 
 const PlaylistForm = (props) => {
   const {
@@ -24,89 +27,31 @@ const PlaylistForm = (props) => {
     active,
     alertMessage,
     variant,
-    initialAuthorize,
+    handleInitialAuthorize,
     handleToken,
     retrieveCodeFromURL,
   } = props;
 
-  // Setting Initial State Values
+  const resolver = useYupValidation(schema);
+  const { register, handleSubmit, errors, formState } = useForm({
+    resolver: resolver,
+    mode: 'onChange',
+  });
 
   const [sliderValue, setSliderValue] = useState([1970, 2000]);
-  const [formValues, setFormValues] = useState({
-    playlistName: '',
-    description: '',
-    privacy: false,
-    genre: '',
-    numSongs: '',
-  });
-
-  // Setting Form Authentication Requirements
-
-  const schema = yup.object().shape({
-    playlistName: yup.string().required('Playlist name is required.'),
-    description: yup.string(),
-    privacy: yup.boolean(),
-    genre: yup.string().required('Genre is required'),
-    numSongs: yup.string().required('Number of songs is required.'),
-  });
-
-  // Setting Error Messages Depending On If User Input Matches Schema
-
-  const [errorMessages, setErrorMessages] = useState({
-    playlistName: '',
-    genre: '',
-    numSongs: '',
-  });
-
-  const setFormErrors = (name, value) => {
-    yup
-      .reach(schema, name)
-      .validate(value)
-      .then(() => {
-        setErrorMessages({ ...errorMessages, [name]: '' });
-      })
-      .catch((err) => {
-        setErrorMessages({ ...errorMessages, [name]: 'Error' });
-      });
-  };
-
-  // Retrieve Authorization URI from Spotify API and redirect
-
-  const handleInitialAuthorize = (e) => {
-    e.preventDefault();
-    initialAuthorize();
-  };
-
-  // On initial render after redirect, parse auth code from URL and exchange for token
 
   useEffect(() => {
     retrieveCodeFromURL();
     handleToken();
-  }, []);
+  });
 
-  // Updating State W/ User Input
-
-  const handleChange = (e) => {
-    const { checked, value, name, type } = e.target;
-    const updatedInfo = type === 'checkbox' ? checked : value;
-    setFormErrors(name, updatedInfo);
-    setFormValues({ ...formValues, [name]: updatedInfo });
-  };
   const handleSliderChange = (event, newValue) => {
     setSliderValue(newValue);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    generatePlaylists({ formValues: formValues, sliderValue: sliderValue });
+  const onSubmit = (data) => {
+    generatePlaylists({ formValues: data, sliderValue: sliderValue });
   };
-
-  // Disabling Submit Button Unless It Matches Form Authentication Schema
-
-  const [disabled, setDisabled] = useState(true);
-  useEffect(() => {
-    schema.isValid(formValues).then((valid) => setDisabled(!valid));
-  }, [formValues]);
 
   return (
     <>
@@ -126,75 +71,28 @@ const PlaylistForm = (props) => {
           </Container>
         )}
         {localStorage.getItem('validated') && (
-          <Container>
-            <Form onSubmit={handleSubmit}>
+          <Container style={{ flex: 'no-wrap' }}>
+            <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Row className='desktop'>
-                <Col xs={8}>
+                <Col>
                   <Form.Group>
                     <Form.Label>PLAYLIST NAME</Form.Label>
                     <Form.Control
                       size='lg'
                       type='text'
                       placeholder='"My Awesome New Playlist"'
-                      name='playlistName'
-                      value={formValues.playlistName}
-                      onChange={handleChange}
-                      autoComplete='off'
-                    />
-                  </Form.Group>
-                </Col>
-                <Col xs={2}>
-                  <Form.Group>
-                    <Form.Label>NUMBER OF SONGS</Form.Label>
-                    <Form.Control
-                      name='numSongs'
-                      value={formValues.numSongs}
-                      onChange={handleChange}
-                      type='number'
-                      min={5}
-                      max={50}
-                      size='lg'
-                      autoComplete='off'
-                    />
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>PRIVATE/PUBLIC</Form.Label>
-                    <Form.Check
-                      name='privacy'
-                      checked={formValues.privacy}
-                      onChange={handleChange}
-                      type='switch'
-                      id='custom-switch'
-                    />
-                  </Form.Group>
-                </Col>
-              </Form.Row>
-              <Form.Row className='mobile'>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>NAME</Form.Label>
-                    <Form.Control
-                      size='lg'
-                      type='text'
-                      placeholder='"My Awesome New Playlist"'
-                      name='playlistName'
-                      value={formValues.playlistName}
-                      onChange={handleChange}
+                      {...register('playlistName', { required: true })}
                       autoComplete='off'
                     />
                   </Form.Group>
                 </Col>
               </Form.Row>
-              <Form.Row className='mobile'>
+              <Form.Row>
                 <Col xs={5}>
                   <Form.Group>
                     <Form.Label>NUMBER OF SONGS</Form.Label>
                     <Form.Control
-                      name='numSongs'
-                      value={formValues.numSongs}
-                      onChange={handleChange}
+                      {...register('numSongs', { required: true })}
                       type='number'
                       min={5}
                       max={50}
@@ -207,9 +105,7 @@ const PlaylistForm = (props) => {
                   <Form.Group>
                     <Form.Label>PRIVATE/PUBLIC</Form.Label>
                     <Form.Check
-                      name='privacy'
-                      checked={formValues.privacy}
-                      onChange={handleChange}
+                      {...register('privacy', { required: true })}
                       type='switch'
                       id='custom-switch'
                     />
@@ -221,9 +117,7 @@ const PlaylistForm = (props) => {
                   <Form.Group>
                     <Form.Label>DESCRIPTION</Form.Label>
                     <Form.Control
-                      name='description'
-                      value={formValues.description}
-                      onChange={handleChange}
+                      {...register('description', { required: true })}
                       rows={3}
                       as='textarea'
                       maxLength='250'
@@ -250,12 +144,7 @@ const PlaylistForm = (props) => {
                 <Col>
                   <Form.Group>
                     <Form.Label>GENRE</Form.Label>
-                    <Form.Control
-                      name='genre'
-                      value={formValues.genre}
-                      onChange={handleChange}
-                      as='select'
-                    >
+                    <Form.Control {...register('genre')} as='select'>
                       {genres.map((genre) => (
                         <option {...genre.attributes} value={genre.value}>
                           {genre.text}
@@ -268,7 +157,7 @@ const PlaylistForm = (props) => {
               <Form.Row>
                 <Col>
                   <Form.Group>
-                    <Button disabled={disabled} type='submit'>
+                    <Button disabled={!formState.isValid} type='submit'>
                       Generate Playlist
                     </Button>
                   </Form.Group>
@@ -312,7 +201,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   generatePlaylists,
-  initialAuthorize,
+  handleInitialAuthorize,
   handleToken,
   retrieveCodeFromURL,
   getToken,

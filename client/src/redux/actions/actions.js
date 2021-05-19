@@ -19,6 +19,7 @@ export const SUCCESS_FINISH = 'SUCCESS_FINISH';
 export const ACCESS_CODE_SUCCESS = 'ACCESS_CODE_SUCCESS';
 
 //https://spotify-playlist-backend2021.herokuapp.com
+//http://localhost:2025
 
 // Step 1: Begin Authorization
 
@@ -26,7 +27,7 @@ export const handleAuthURI = () => (dispatch) => {
   dispatch({ type: SUCCESS_FINISH });
 
   return axios
-    .get('https://spotify-playlist-backend2021.herokuapp.com/authorize')
+    .get('http://localhost:2025/authorize')
     .then((res) => {
       localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
@@ -65,9 +66,7 @@ export const handleToken = () => (dispatch, getState) => {
   let state = getState();
   const code = state.code;
   return axios
-    .get(
-      `https://spotify-playlist-backend2021.herokuapp.com/getcredentials?code=${code}`
-    )
+    .get(`http://localhost:2025/getcredentials?code=${code}`)
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
     })
@@ -85,7 +84,7 @@ export const getToken = () => (dispatch) => {
 
 export const handleUserInfo = () => (dispatch) => {
   return axios
-    .get('https://spotify-playlist-backend2021.herokuapp.com/me')
+    .get('http://localhost:2025/me')
     .then((res) => {
       dispatch({
         type: ALERT_MESSAGE,
@@ -270,4 +269,9 @@ export const generatePlaylists = (data) => (dispatch) => {
     .then(() => {
       return dispatch(addToPlaylist());
     });
+};
+
+export const handleInitialAuthorize = (e) => (dispatch) => {
+  e.preventDefault();
+  dispatch(initialAuthorize());
 };

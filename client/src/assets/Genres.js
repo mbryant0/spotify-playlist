@@ -12,7 +12,6 @@ const genres = [
   { text: 'J-Pop', value: 'japanese+pop' },
   { text: 'K-Pop', value: 'k-pop' },
   { text: 'Pop', value: 'Pop' },
-  { text: 'Synth Pop', value: 'synth+pop' },
   { text: '<HIP-HOP>', value: 'HIP-HOP', attributes: { disabled: true } },
   { text: 'Hip Hop', value: 'hip+hop' },
   { text: 'Rap', value: 'rap' },

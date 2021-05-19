@@ -101,14 +101,40 @@ body {
 .desktop {
   display: flex;
 }
+
+.mobile {
+  display: none;
+}
 .col-6 {
   display: none;
   width: 0;
   height: 0;
 }
 
-.mobile {
-  display: none;
+@media screen and (max-width: 1200px) {
+  .title {
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+
+  label.form-label {
+    font-size: 1.2rem;
+  }
+
+  .form-control-lg {
+    font-size: 1.1rem;
+  }
+
+  .disclaimer {
+    h2 {
+      font-size: 1.5rem;
+    }
+    button {
+      font-size: 1.1rem;
+      padding: 10px;
+    }
+  }
 }
 
 @media screen and (max-width: 1200px) {
@@ -138,10 +164,6 @@ body {
 }
 
 @media screen and (max-width: 1000px) {
-  .desktop {
-    display: none;
-  }
-
   .mobile {
     display: flex;
   }
@@ -180,3 +202,8 @@ body {
     font-size: 0.9rem;
   }
 }
+
+/*
+
+
+              */
