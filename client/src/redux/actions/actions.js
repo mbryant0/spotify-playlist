@@ -27,7 +27,7 @@ export const handleAuthURI = () => (dispatch) => {
   dispatch({ type: SUCCESS_FINISH });
 
   return axios
-    .get('http://localhost:2025/authorize')
+    .get('https://spotify-playlist-backend2021.herokuapp.com/authorize')
     .then((res) => {
       localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
@@ -66,7 +66,9 @@ export const handleToken = () => (dispatch, getState) => {
   let state = getState();
   const code = state.code;
   return axios
-    .get(`http://localhost:2025/getcredentials?code=${code}`)
+    .get(
+      `https://spotify-playlist-backend2021.herokuapp.com/getcredentials?code=${code}`
+    )
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
     })
@@ -84,7 +86,7 @@ export const getToken = () => (dispatch) => {
 
 export const handleUserInfo = () => (dispatch) => {
   return axios
-    .get('http://localhost:2025/me')
+    .get('https://spotify-playlist-backend2021.herokuapp.com/me')
     .then((res) => {
       dispatch({
         type: ALERT_MESSAGE,
