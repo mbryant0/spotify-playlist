@@ -53,7 +53,7 @@ const PlaylistForm = (props) => {
 
   // On submit, dispatch form values to Redux store
   const onSubmit = (data) => {
-    generatePlaylists({ formValues: data, sliderValue: sliderValue });
+    generatePlaylists({ formValues: data, sliderValue });
   };
 
   return (

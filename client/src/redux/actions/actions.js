@@ -26,13 +26,16 @@ export const LOADING_DONE = 'LOADING_DONE';
 // Step 1: Begin Authorization
 
 export const handleAuthURI = () => (dispatch) => {
-  dispatch({ type: SUCCESS_FINISH });
+  //dispatch({ type: SUCCESS_FINISH });
 
   return axios
     .get('https://spotify-playlist-backend2021.herokuapp.com/authorize')
     .then((res) => {
       localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 };
 
@@ -73,6 +76,10 @@ export const handleToken = () => (dispatch, getState) => {
     )
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
+      console.log(code);
+    })
+    .then(() => {
+      console.log(code);
     });
 };
 
@@ -232,13 +239,7 @@ export const addToPlaylist = () => (dispatch, getState) => {
 // Step 16: Combine all action creators in sequential order
 
 export const generatePlaylists = (data) => (dispatch) => {
-  dispatch(handleAuthURI())
-    .then(() => {
-      return dispatch(handleToken());
-    })
-    .then(() => {
-      return dispatch(handleUserInfo());
-    })
+  dispatch(handleUserInfo())
     .then(() => {
       return dispatch(handleFormValues(data.formValues));
     })
