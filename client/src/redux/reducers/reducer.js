@@ -41,6 +41,7 @@ const initialState = {
   code: '',
   authMessage: '',
   promiseError: false,
+  isLoading: false,
 };
 
 function reducer(state = initialState, action) {

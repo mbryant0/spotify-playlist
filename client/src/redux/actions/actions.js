@@ -31,9 +31,6 @@ export const handleAuthURI = () => (dispatch) => {
     .then((res) => {
       localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
-    })
-    .catch((err) => {
-      console.log('Please check your internet connection', err);
     });
 };
 
@@ -46,7 +43,8 @@ export const redirect = () => (dispatch, getState) => {
 };
 
 // Step 3: Combine Steps 1 and 2 into a single action creator
-export const initialAuthorize = () => (dispatch) => {
+export const initialAuthorize = (e) => (dispatch) => {
+  e.preventDefault();
   dispatch(handleAuthURI()).then(() => {
     return dispatch(redirect());
   });
@@ -71,8 +69,7 @@ export const handleToken = () => (dispatch, getState) => {
     )
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
-    })
-    .catch((err) => {});
+    });
 };
 
 // Step 6: Combine Steps 3 and 4 into a single action creator
@@ -94,9 +91,6 @@ export const handleUserInfo = () => (dispatch) => {
       });
       dispatch({ type: GET_USER_INFO, payload: res.data.id });
       dispatch({ type: LOADING_START });
-    })
-    .catch((err) => {
-      console.log('Error occurred while retrieving profile information', err);
     });
 };
 
@@ -145,9 +139,6 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
         type: GET_PLAYLIST_URL,
         payload: res.data.external_urls.spotify,
       });
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
@@ -191,9 +182,6 @@ export const handleSearch = () => (dispatch, getState) => {
           variant: 'warning',
         },
       });
-    })
-    .catch((err) => {
-      console.log('There was an error searching for tracks: ', err);
     });
 };
 
@@ -271,9 +259,4 @@ export const generatePlaylists = (data) => (dispatch) => {
     .then(() => {
       return dispatch(addToPlaylist());
     });
-};
-
-export const handleInitialAuthorize = (e) => (dispatch) => {
-  e.preventDefault();
-  dispatch(initialAuthorize());
 };

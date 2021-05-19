@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import * as yup from 'yup';
+import { useCallback } from 'react';
 
+// Custom hook that validates form inputs for use with useForm
 const useYupValidation = (validationSchema) =>
   useCallback(
     async (data) => {

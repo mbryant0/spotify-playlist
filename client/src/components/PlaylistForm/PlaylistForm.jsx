@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import CustomSlider from '../CustomSlider/CustomSlider';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -13,7 +13,7 @@ import {
   handleToken,
   retrieveCodeFromURL,
   getToken,
-  handleInitialAuthorize,
+  initialAuthorize,
 } from '../../redux/actions/actions';
 
 import { useForm } from 'react-hook-form';
@@ -28,13 +28,14 @@ const PlaylistForm = (props) => {
     active,
     alertMessage,
     variant,
-    handleInitialAuthorize,
+    initialAuthorize,
     handleToken,
     retrieveCodeFromURL,
   } = props;
 
+  // Retrieve form input data from user, and validate their responses
   const resolver = useYupValidation(schema);
-  const { register, handleSubmit, errors, formState } = useForm({
+  const { register, handleSubmit, formState } = useForm({
     resolver: resolver,
     mode: 'onChange',
   });
@@ -42,11 +43,13 @@ const PlaylistForm = (props) => {
     1970, 2000,
   ]);
 
+  // Parse URL for auth code and exchange for token on initial render
   useEffect(() => {
     retrieveCodeFromURL();
     handleToken();
   }, []);
 
+  // On submit, dispatch form values to Redux store
   const onSubmit = (data) => {
     generatePlaylists({ formValues: data, sliderValue: sliderValue });
   };
@@ -63,13 +66,13 @@ const PlaylistForm = (props) => {
               In order to use this application, you must authorize your Spotify
               account.
             </h2>
-            <button onClick={handleInitialAuthorize}>
+            <button onClick={initialAuthorize}>
               I agree, authorize my account
             </button>
           </Container>
         )}
         {localStorage.getItem('validated') && (
-          <Container style={{ flex: 'no-wrap' }}>
+          <Container>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Row className='desktop'>
                 <Col>
@@ -197,7 +200,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   generatePlaylists,
-  handleInitialAuthorize,
+  initialAuthorize,
   handleToken,
   retrieveCodeFromURL,
   getToken,
