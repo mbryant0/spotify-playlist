@@ -19,6 +19,7 @@ import {
 import { useForm } from 'react-hook-form';
 import useYupValidation from '../../hooks/useYupValidation';
 import useSlider from '../../hooks/useSlider';
+import { Spinner } from 'react-spinners-css';
 
 const PlaylistForm = (props) => {
   const {
@@ -31,12 +32,13 @@ const PlaylistForm = (props) => {
     initialAuthorize,
     handleToken,
     retrieveCodeFromURL,
+    isLoading,
   } = props;
 
   // Retrieve form input data from user, and validate their responses
   const resolver = useYupValidation(schema);
   const { register, handleSubmit, formState } = useForm({
-    resolver: resolver,
+    resolver,
     mode: 'onChange',
   });
   const { value: sliderValue, bind: bindSliderValues } = useSlider([
@@ -66,9 +68,13 @@ const PlaylistForm = (props) => {
               In order to use this application, you must authorize your Spotify
               account.
             </h2>
-            <button onClick={initialAuthorize}>
-              I agree, authorize my account
-            </button>
+            {isLoading ? (
+              <Spinner color='black' />
+            ) : (
+              <button onClick={initialAuthorize}>
+                I agree, authorize my account
+              </button>
+            )}
           </Container>
         )}
         {localStorage.getItem('validated') && (
@@ -146,8 +152,12 @@ const PlaylistForm = (props) => {
                   <Form.Group>
                     <Form.Label>GENRE</Form.Label>
                     <Form.Control {...register('genre')} as='select'>
-                      {genres.map((genre) => (
-                        <option {...genre.attributes} value={genre.value}>
+                      {genres.map((genre, i) => (
+                        <option
+                          {...genre.attributes}
+                          value={genre.value}
+                          key={i}
+                        >
                           {genre.text}
                         </option>
                       ))}
@@ -195,6 +205,7 @@ const mapStateToProps = (state) => {
     alertMessage: state.alertMessage,
     variant: state.variant,
     token: state.token,
+    isLoading: state.isLoading,
   };
 };
 

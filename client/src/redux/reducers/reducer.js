@@ -16,6 +16,8 @@ import {
   LOADING_FINISH,
   SUCCESS_FINISH,
   ACCESS_CODE_SUCCESS,
+  START_AUTHORIZATION,
+  LOADING_DONE,
 } from '../actions/actions';
 
 const initialState = {
@@ -91,6 +93,10 @@ function reducer(state = initialState, action) {
       return { ...state, success: false };
     case ACCESS_CODE_SUCCESS:
       return { ...state, code: action.payload };
+    case START_AUTHORIZATION:
+      return { ...state, isLoading: true };
+    case LOADING_DONE:
+      return { ...state, isLoading: false };
     default:
       return state;
   }

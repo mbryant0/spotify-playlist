@@ -17,6 +17,8 @@ export const ALERT_MESSAGE = 'ALERT_MESSAGE';
 export const LOADING_FINISH = 'LOADING_FINISH';
 export const SUCCESS_FINISH = 'SUCCESS_FINISH';
 export const ACCESS_CODE_SUCCESS = 'ACCESS_CODE_SUCCESS';
+export const START_AUTHORIZATION = 'START_AUTHORIZATION';
+export const LOADING_DONE = 'LOADING_DONE';
 
 //https://spotify-playlist-backend2021.herokuapp.com
 //http://localhost:2025
@@ -39,12 +41,14 @@ export const handleAuthURI = () => (dispatch) => {
 export const redirect = () => (dispatch, getState) => {
   let state = getState();
   const authUri = state.authUri;
+  dispatch({ type: LOADING_DONE });
   return (window.location.href = authUri);
 };
 
 // Step 3: Combine Steps 1 and 2 into a single action creator
 export const initialAuthorize = (e) => (dispatch) => {
   e.preventDefault();
+  dispatch({ type: START_AUTHORIZATION });
   dispatch(handleAuthURI()).then(() => {
     return dispatch(redirect());
   });
