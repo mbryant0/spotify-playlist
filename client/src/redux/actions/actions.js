@@ -152,7 +152,7 @@ export const handlePlaylistCreation = () => (dispatch, getState) => {
 
 // Step 11: Retrieve Query Seed
 
-export const randomizeQuery = (length) => (dispatch) => {
+export const randomizeQuery = () => (dispatch) => {
   var result = '';
   result =
     randomCharacters[Math.floor(Math.random() * randomCharacters.length)];
@@ -214,13 +214,13 @@ export const addToPlaylist = () => (dispatch, getState) => {
       { uris: trackUris },
       { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } }
     )
-    .then((res) => {
+    .then(() => {
       dispatch({
         type: LOADING_FINISH,
       });
       dispatch({ type: SUCCESS_ALERT });
     })
-    .catch((err) => {
+    .catch(() => {
       dispatch({
         type: ALERT_MESSAGE,
         payload: {
