@@ -26,14 +26,11 @@ export const LOADING_DONE = 'LOADING_DONE';
 // Step 1: Begin Authorization
 
 export const handleAuthURI = () => (dispatch) => {
-  //dispatch({ type: SUCCESS_FINISH });
-
-  return axios
-    .get('https://spotify-playlist-backend2021.herokuapp.com/authorize')
-    .then((res) => {
-      localStorage.setItem('validated', true);
-      dispatch({ type: GET_URI, payload: res.data });
-    });
+  dispatch({ type: SUCCESS_FINISH });
+  return axios.get('http://localhost:2025/authorize').then((res) => {
+    localStorage.setItem('validated', true);
+    dispatch({ type: GET_URI, payload: res.data });
+  });
 };
 
 // Step 2: Redirect User to Authorization URI
@@ -68,9 +65,7 @@ export const handleToken = () => (dispatch, getState) => {
   let state = getState();
   const code = state.code;
   return axios
-    .get(
-      `https://spotify-playlist-backend2021.herokuapp.com/getcredentials?code=${code}`
-    )
+    .get(`http://localhost:2025/getcredentials?code=${code}`)
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
     });
@@ -86,16 +81,14 @@ export const getToken = () => (dispatch) => {
 // Step 7: Save User Id in State
 
 export const handleUserInfo = () => (dispatch) => {
-  return axios
-    .get('https://spotify-playlist-backend2021.herokuapp.com/me')
-    .then((res) => {
-      dispatch({
-        type: ALERT_MESSAGE,
-        payload: { alertMessage: 'One moment...', variant: 'warning' },
-      });
-      dispatch({ type: GET_USER_INFO, payload: res.data.id });
-      dispatch({ type: LOADING_START });
+  return axios.get('http://localhost:2025/me').then((res) => {
+    dispatch({
+      type: ALERT_MESSAGE,
+      payload: { alertMessage: 'One moment...', variant: 'warning' },
     });
+    dispatch({ type: GET_USER_INFO, payload: res.data.id });
+    dispatch({ type: LOADING_START });
+  });
 };
 
 // Step 8: Save Form Values in Global Application State
