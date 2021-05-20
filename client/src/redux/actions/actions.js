@@ -76,11 +76,8 @@ export const handleToken = () => (dispatch, getState) => {
     )
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
-      console.log(code);
     })
-    .then(() => {
-      console.log(code);
-    });
+    .then(() => {});
 };
 
 // Step 6: Combine Steps 3 and 4 into a single action creator
