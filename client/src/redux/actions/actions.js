@@ -33,9 +33,6 @@ export const handleAuthURI = () => (dispatch) => {
     .then((res) => {
       localStorage.setItem('validated', true);
       dispatch({ type: GET_URI, payload: res.data });
-    })
-    .catch((err) => {
-      console.log(err);
     });
 };
 
@@ -76,8 +73,7 @@ export const handleToken = () => (dispatch, getState) => {
     )
     .then((res) => {
       localStorage.setItem('token', res.data.accessToken);
-    })
-    .then(() => {});
+    });
 };
 
 // Step 6: Combine Steps 3 and 4 into a single action creator
